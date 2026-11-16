@@ -1,0 +1,82 @@
+{
+  "project": "CASA Video Editing Library",
+  "edition": "V2",
+  "date": "2026-11-16",
+  "environment": "ChatGPT sandbox Linux; NOT FAMILIA or Garnet or Firestick",
+  "source_repository": "https://github.com/jairveloso21-coder/a-casa-core",
+  "status_vocabulary": [
+    "RESEARCHED",
+    "CANDIDATE",
+    "LOCAL_SANDBOX_TESTED",
+    "SOURCE_COMMITTED",
+    "HOST_VERIFIED",
+    "DEVICE_VERIFIED"
+  ],
+  "tools": [
+    {
+      "name": "FFmpeg",
+      "repo": "https://github.com/FFmpeg/FFmpeg",
+      "version_local": "7.1.5",
+      "status": "LOCAL_SANDBOX_TESTED",
+      "function": "cut composition encode H.264/AAC and audio loudness; full export and decode checks",
+      "evidence": "3 MP4 rendered and decoded"
+    },
+    {
+      "name": "OpenCV",
+      "repo": "https://github.com/opencv/opencv",
+      "version_local": "4.13.0",
+      "status": "LOCAL_SANDBOX_TESTED",
+      "function": "source inspections and contact-sheet extraction; manual subject-aware tracking decision",
+      "evidence": "original moment contact sheets, Zelda crop fix"
+    },
+    {
+      "name": "Pillow",
+      "repo": "https://github.com/python-pillow/Pillow",
+      "version_local": "12.3.0",
+      "status": "LOCAL_SANDBOX_TESTED",
+      "function": "gradient overlays and social cover art",
+      "evidence": "3 images generated"
+    },
+    {
+      "name": "PySceneDetect",
+      "repo": "https://github.com/Breakthrough/PySceneDetect",
+      "version_researched": "0.7.3 (2026-11-08)",
+      "status": "RESEARCHED",
+      "function": "adaptive cut detection and reproducible scene CSV",
+      "reason_not_integrated": "Package resolution failed in sandbox package index; NOT installed or validated"
+    },
+    {
+      "name": "auto-editor",
+      "repo": "https://github.com/WyattBlue/auto-editor",
+      "status": "CANDIDATE",
+      "function": "silence/motion cuts and editor timeline exports",
+      "reason_not_integrated": "Game audio is continuous; automatic silence cuts may remove gameplay; verify binary distribution restrictions and license"
+    },
+    {
+      "name": "heditor",
+      "repo": "https://github.com/pycodebr/heditor",
+      "status": "CANDIDATE",
+      "function": "creator-grade vertical preset styles including game, 1080x1920 workflows",
+      "reason_not_integrated": "Full stack not installed or benchmarked on FAMILIA; audit dependencies/licenses before running"
+    },
+    {
+      "name": "Reframe",
+      "repo": "https://github.com/Prekzursil/Reframe",
+      "status": "CANDIDATE",
+      "function": "AI long-video selection, vertical reframing, auto captions",
+      "reason_not_integrated": "Face-tracking assumptions not ideal for game footage; too heavy to authorize host installation without measured performance"
+    },
+    {
+      "name": "OpenTimelineIO",
+      "repo": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO",
+      "status": "RESEARCHED",
+      "function": "portable timelines and NLE interoperability",
+      "reason_not_integrated": "Not necessary to export these 3 short videos; not installed"
+    }
+  ],
+  "host_installation": "NOT PERFORMED",
+  "github_source_write": "PENDING",
+  "user_device_or_platform_playback": "NOT PERFORMED",
+  "manual_editorial_QA": "contact-sheet and representative frame reviews performed; no human user review of V2 yet",
+  "security": "No external media/audio downloaded. Originals unchanged. No remote exec performed."
+}
