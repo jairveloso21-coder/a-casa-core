@@ -1,40 +1,43 @@
 ﻿{
-  "workbench": "A CASA",
-  "ambiente_terminal": "CASA LAB (PowerShell 5.1 + WSL 2.7.13.0)",
-  "dispositivos": {
-    "notebook": {
-      "os": "Microsoft Windows 11 Home Single Language (64 bits)",
-      "cpu": "Intel(R) Core(TM) i5-10210U (4 Nucleos / 8 Threads)",
-      "ram_gb": 19.83,
-      "gpus": ["NVIDIA GeForce MX250", "Intel(R) UHD Graphics"],
-      "compiladores": {
-        "python": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
-        "node": "C:\\Program Files\\nodejs\\node.exe",
-        "go": "C:\\Users\\jairv\\Tools\\go1.27.1\\go\\bin\\go.exe",
-        "javac": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.20.101-hotspot\\bin\\javac.exe",
-        "dotnet": "C:\\Program Files\\dotnet\\dotnet.exe",
-        "ninja": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\ninja.exe"
-      },
-      "ferramentas": {
-        "ffmpeg": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.exe",
-        "strings": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\strings.exe",
-        "adb": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Genymobile.scrcpy_Microsoft.Winget.Source_8wekyb3d8bbwe\\scrcpy-win64-v4.1\\adb.exe",
-        "wsl": "C:\\Windows\\system32\\wsl.exe"
-      }
-    },
-    "celular_principal": {
-      "nome": "garned",
-      "papel": "Dispositivo mobile principal de execucao e testes",
-      "android": "Android",
-      "arquitetura": "arm64-v8a",
-      "serial_adb": ""
-    },
-    "firestick_tv": {
-      "modelo": "AFTKM",
-      "papel": "Amazon Fire TV Stick (nao confundir com o celular garned)",
-      "android": "11",
-      "arquitetura": "armeabi-v7a",
-      "serial_adb": "192.168.1.108:5555"
-    }
-  }
+    "workbench":  "A CASA",
+    "ambiente_terminal":  "CASA LAB (PowerShell 5.1 + WSL 2.7.13.0)",
+    "dispositivos":  {
+                         "notebook":  {
+                                          "os":  "Microsoft Windows 11 Home Single Language (64 bits)",
+                                          "cpu":  "Intel(R) Core(TM) i5-10210U (4 Nucleos / 8 Threads)",
+                                          "ram_gb":  19.83,
+                                          "gpus":  [
+                                                       "NVIDIA GeForce MX250",
+                                                       "Intel(R) UHD Graphics"
+                                                   ],
+                                          "compiladores":  {
+                                                               "python":  "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
+                                                               "node":  "C:\\Program Files\\nodejs\\node.exe",
+                                                               "go":  "C:\\Users\\jairv\\Tools\\go1.27.1\\go\\bin\\go.exe",
+                                                               "javac":  "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.20.101-hotspot\\bin\\javac.exe",
+                                                               "dotnet":  "C:\\Program Files\\dotnet\\dotnet.exe",
+                                                               "ninja":  "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\ninja.exe"
+                                                           },
+                                          "ferramentas":  {
+                                                              "ffmpeg":  "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.exe",
+                                                              "strings":  "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\strings.exe",
+                                                              "adb":  "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Genymobile.scrcpy_Microsoft.Winget.Source_8wekyb3d8bbwe\\scrcpy-win64-v4.1\\adb.exe",
+                                                              "wsl":  "C:\\Windows\\system32\\wsl.exe"
+                                                          }
+                                      },
+                         "celular_principal":  {
+                                                   "nome":  "garned",
+                                                   "papel":  "Dispositivo mobile principal de execucao e testes",
+                                                   "android":  "16",
+                                                   "arquitetura":  "arm64-v8a",
+                                                   "serial_adb":  "b3a67583"
+                                               },
+                         "firestick_tv":  {
+                                              "modelo":  "AFTKM",
+                                              "papel":  "Amazon Fire TV Stick (nao confundir com o celular garned)",
+                                              "android":  "11",
+                                              "arquitetura":  "armeabi-v7a",
+                                              "serial_adb":  "192.168.1.108:5555"
+                                          }
+                     }
 }
