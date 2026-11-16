@@ -75,8 +75,13 @@
     }
   ],
   "host_installation": "NOT PERFORMED",
-  "github_source_write": "PENDING",
+  "github_source_write": "SOURCE_COMMITTED_VERIFIED",
   "user_device_or_platform_playback": "NOT PERFORMED",
   "manual_editorial_QA": "contact-sheet and representative frame reviews performed; no human user review of V2 yet",
-  "security": "No external media/audio downloaded. Originals unchanged. No remote exec performed."
+  "security": "No external media/audio downloaded. Originals unchanged. No remote exec performed.",
+  "github_file_paths": [
+    "integracoes/edicao_video/CASA_VIDEO_LAB_V2.py",
+    "integracoes/edicao_video/README.md",
+    "integracoes/edicao_video/CATALOGO_FERRAMENTAS_VIDEO_V2.json"
+  ]
 }
