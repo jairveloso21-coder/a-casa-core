@@ -1,0 +1,31 @@
+﻿{
+  "workbench": "A CASA",
+  "ambiente_terminal": "CASA LAB (PowerShell 5.1 + WSL 2.7.13.0)",
+  "dispositivos": {
+    "notebook": {
+      "os": "Microsoft Windows 11 Home Single Language (64 bits)",
+      "cpu": "Intel(R) Core(TM) i5-10210U (4 Nucleos / 8 Threads)",
+      "ram_gb": 19.83,
+      "gpus": ["NVIDIA GeForce MX250", "Intel(R) UHD Graphics"],
+      "compiladores": {
+        "python": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
+        "node": "C:\\Program Files\\nodejs\\node.exe",
+        "go": "C:\\Users\\jairv\\Tools\\go1.27.1\\go\\bin\\go.exe",
+        "javac": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.20.101-hotspot\\bin\\javac.exe",
+        "dotnet": "C:\\Program Files\\dotnet\\dotnet.exe",
+        "ninja": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\ninja.exe"
+      },
+      "ferramentas": {
+        "ffmpeg": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.exe",
+        "strings": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Links\\strings.exe",
+        "adb": "C:\\Users\\jairv\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Genymobile.scrcpy_Microsoft.Winget.Source_8wekyb3d8bbwe\\scrcpy-win64-v4.1\\adb.exe",
+        "wsl": "C:\\Windows\\system32\\wsl.exe"
+      }
+    },
+    "celular_alvo": {
+      "modelo": "AFTKM",
+      "android": "11",
+      "arquitetura_obrigatoria": "armeabi-v7a"
+    }
+  }
+}
