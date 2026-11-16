@@ -118,3 +118,13 @@ if __name__ == "__main__":
     res = processar_texto_ou_arquivo(ap.parse_args().entrada)
     print(json.dumps(res, indent=2, ensure_ascii=False))
     sys.exit(0 if res["status"] == "HOMOLOGADO_SUCESSO" else 1)
+    args = ap.parse_args()
+    if args.autonomo:
+        p = Path(args.entrada)
+        texto_os = p.read_text(encoding="utf-8-sig") if p.exists() else args.entrada
+        res = executar_loop_autonomo(texto_os, modelo=args.modelo)
+    else:
+        res = processar_texto_ou_arquivo(args.entrada)
+    print(json.dumps(res, indent=2, ensure_ascii=False))
+    sys.exit(0 if res["status"] == "HOMOLOGADO_SUCESSO" else 1)
+
