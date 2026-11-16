@@ -1,3 +1,15 @@
+<!-- CASA_VIDEO_V3_CONTINUIDADE -->
+## Regra prioritária desde V3 (16/11/2026)
+
+**Editar sempre o arquivo bruto ORIGINAL**, identificado por nome e SHA-256. Não utilizar renders de versões anteriores como matéria-prima, não inverter a cronologia de uma sequência, não cortar dentro de um golpe ou salto e não confundir velocidade de montagem com qualidade editorial.
+
+- [Manual de narrativa, decupagem e continuidade V3](./GUIA_EDITORIAL_CONTINUIDADE_V3.md)
+- [Catálogo e estado de verificação V3](./CATALOGO_VIDEO_CONTINUIDADE_V3.json)
+
+**Evidência V3:** três MP4s produzidos dos arquivos originais e 33/33 verificações automáticas no sandbox. **Pendente:** HOST FAMILIA, dispositivos e retenção após publicação. As regras V3 têm precedência editorial sobre a montagem V2; preservar os arquivos V2 para auditoria histórica.
+
+---
+
 # CASA Video Lab V2 — biblioteca de edição de gameplay
 
 **Edição:** 2026-11-16 · **Alvo:** cortes verticais para Reels, TikTok e Shorts.
