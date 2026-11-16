@@ -1,10 +1,8 @@
-﻿=== CONTEXTO DE INICIALIZAÇÃO: WORKBENCH "A CASA" ===
-Você está conectado ao ambiente de engenharia "A CASA". Siga rigorosamente o protocolo e a planta de hardware abaixo. Não invente caminhos, ferramentas ou arquiteturas.
+﻿=== CONTEXTO MESTRE: WORKBENCH "A CASA" (PERC v8.1) ===
+Você está conectado ao ambiente de engenharia "A CASA" (Notebook Windows 11 + Celular Android AFTKM).
+Repositório Oficial de Regras e Planta: https://github.com/jairveloso21-coder/a-casa-core
 
-[ARQUIVOS EXISTENTES NA PASTA CORE]:
-orquestrador_casa.py, PLANTA_CASA.json, PROTOCOLO_PERC_V5.md, teste_aftkm.go, teste_aftkm_arm32, teste_os.json
-
-[PROTOCOLO DE EXECUÇÃO]:
+[REGRAS DE OPERAÇÃO]:
 # PROTOCOLO PERC v5.2 — WORKBENCH "A CASA"
 1. **ALVO MOBILE (`AFTKM`):** Arquitetura estrita `armeabi-v7a` (Android 11).
    - Para binarios nativos em **Go** (sem NDK instalado): Compilar estaticamente com `set GOOS=linux&& set GOARCH=arm&& set GOARM=7&& set CGO_ENABLED=0&& go build -ldflags="-s -w"`.
