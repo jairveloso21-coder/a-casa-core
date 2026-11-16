@@ -1,0 +1,57 @@
+{
+  "project": "CASA Video Lab",
+  "edition": "V3",
+  "date": "2026-11-16",
+  "environment": "ChatGPT sandbox; no FAMILIA host execution",
+  "policy": "ORIGINAL_ONLY + STORY_CONTINUITY + SOURCE_SHA256 + REAL_QA",
+  "tools": [
+    {
+      "name": "FFmpeg",
+      "version_local": "7.1.5",
+      "status": "SANDBOX_TESTED",
+      "role": "render 720x1280 H264 AAC, trim, loudnorm, full decode"
+    },
+    {
+      "name": "Pillow",
+      "status": "SANDBOX_TESTED",
+      "role": "static blurred backgrounds and original titles"
+    },
+    {
+      "name": "OpenCV",
+      "status": "SANDBOX_AVAILABLE",
+      "role": "inspection; continuity decisions remain editorial"
+    },
+    {
+      "name": "PySceneDetect",
+      "status": "RESEARCHED_NOT_INSTALLED",
+      "role": "detect scene boundaries, not narrative cuts",
+      "source": "https://www.scenedetect.com/docs/latest/"
+    },
+    {
+      "name": "Kdenlive",
+      "status": "RESEARCHED_NOT_INSTALLED",
+      "role": "3-point editing and ripple trimming",
+      "source": "https://docs.kdenlive.org/pt_BR/cutting_and_assembling/editing.html"
+    },
+    {
+      "name": "OpenTimelineIO",
+      "status": "RESEARCHED_NOT_INSTALLED",
+      "role": "timeline/EDL interoperability",
+      "source": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO"
+    },
+    {
+      "name": "auto-editor",
+      "status": "CANDIDATE_RESTRICTED",
+      "role": "no automatic deletion of gameplay narrative beats"
+    }
+  ],
+  "rendered_v3": [
+    "TEKKEN8_V3_COMBOS_CONTINUOS.mp4",
+    "ZELDA_V3_SALTO_CONTINUO.mp4",
+    "BOSS_V3_LUTA_INTEIRA.mp4"
+  ],
+  "qa_result": "33/33 automated local checks PASS",
+  "host_familia": "NOT_TESTED",
+  "device": "NOT_TESTED",
+  "platform_retention": "NOT_MEASURED"
+}
