@@ -1,19 +1,27 @@
-﻿=== CONTEXTO MESTRE: WORKBENCH "A CASA" (PERC v8.1) ===
-Você está conectado ao ambiente de engenharia "A CASA" (Notebook Windows 11 + Celular Android AFTKM).
-Repositório Oficial de Regras e Planta: https://github.com/jairveloso21-coder/a-casa-core
+﻿=== CONTEXTO MESTRE: WORKBENCH A CASA ===
+Repositorio: https://github.com/jairveloso21-coder/a-casa-core
 
-[REGRAS DE OPERAÇÃO]:
-# PROTOCOLO PERC v5.2 — WORKBENCH "A CASA"
-1. **ALVO MOBILE (`AFTKM`):** Arquitetura estrita `armeabi-v7a` (Android 11).
-   - Para binarios nativos em **Go** (sem NDK instalado): Compilar estaticamente com `set GOOS=linux&& set GOARCH=arm&& set GOARM=7&& set CGO_ENABLED=0&& go build -ldflags="-s -w"`.
-   - Para APKs ou C/C++ com NDK: Executar via `wsl`.
-2. **C/C++ E REVERSA:** Executar via `wsl` (Windows host nao possui GCC/Clang).
-3. **FFMPEG:** Usar obrigatoriamente `-threads 8` e priorizar GPU (`-hwaccel auto` / `-c:v h264_nvenc`).
-4. **ANTI-PREGUICA:** Proibido `TODO`, `FIXME`, `...` ou codigo identico ao anterior (SHA-256 deve mudar).
-5. **FORMATO DE SAIDA QWEN:** Responder apenas JSON com `id_os`, `alvo`, `arquivo_destino`, `binario_gerado`, `melhorias_tecnicas`, `comando_build`, `comando_validacao`, `codigo_completo`.
+[PROTOCOLO]:
+# PROTOCOLO PERC v8.2 — WORKBENCH "A CASA"
+
+## 1. DISPOSITIVOS DO WORKBENCH (PROIBIDO CONFUNDIR)
+- **NOTEBOOK (`WIN_HOST` / `WSL_LINUX`):** Windows 11 64-bit | Intel i5-10210U (8 Threads) | NVIDIA MX250 | WSL 2.
+- **CELULAR PRINCIPAL (`CELULAR_GARNED`):** Dispositivo mobile oficial (`garned`). Use sempre `adb -s <serial_garned>` para deploy/testes mobile.
+- **FIRE TV STICK (`FIRESTICK_AFTKM`):** Dispositivo de TV (`AFTKM`, Android 11, `armeabi-v7a`). Nunca envie builds de celular para o AFTKM sem ordem explicita.
+
+## 2. REGRAS DE COMPILACAO E FERRAMENTAS
+1. **Go Estatico para Android/ARM:**
+   - Para `armeabi-v7a` (32-bit): `set GOOS=linux&& set GOARCH=arm&& set GOARM=7&& set CGO_ENABLED=0&& go build -ldflags="-s -w"`
+   - Para `arm64-v8a` (64-bit): `set GOOS=linux&& set GOARCH=arm64&& set CGO_ENABLED=0&& go build -ldflags="-s -w"`
+2. **C / C++ / Radare2 / Apktool:** Executar via `wsl`.
+3. **FFmpeg (Video):** Usar `-threads 8` e priorizar GPU (`-hwaccel auto` / `-c:v h264_nvenc`).
+4. **Anti-Preguica e Anti-Clone:** Proibido `TODO`, `FIXME`, `...` ou devolver codigo com hash SHA-256 identico ao anterior.
+
+## 3. CONTRATO JSON DE SAIDA DA QWEN
+Responder apenas JSON com: `id_os`, `alvo` (`WIN_HOST | WSL_LINUX | CELULAR_GARNED | FIRESTICK_AFTKM`), `arquivo_destino`, `binario_gerado`, `melhorias_tecnicas`, `comando_build`, `comando_validacao`, `codigo_completo`.
 
 
-[PLANTA REAL DE HARDWARE E COMPILADORES]:
+[PLANTA HARDWARE]:
 {
   "workbench": "A CASA",
   "ambiente_terminal": "CASA LAB (PowerShell 5.1 + WSL 2.7.13.0)",
@@ -38,10 +46,19 @@ Repositório Oficial de Regras e Planta: https://github.com/jairveloso21-coder/a
         "wsl": "C:\\Windows\\system32\\wsl.exe"
       }
     },
-    "celular_alvo": {
+    "celular_principal": {
+      "nome": "garned",
+      "papel": "Dispositivo mobile principal de execucao e testes",
+      "android": "Android",
+      "arquitetura": "arm64-v8a",
+      "serial_adb": ""
+    },
+    "firestick_tv": {
       "modelo": "AFTKM",
+      "papel": "Amazon Fire TV Stick (nao confundir com o celular garned)",
       "android": "11",
-      "arquitetura_obrigatoria": "armeabi-v7a"
+      "arquitetura": "armeabi-v7a",
+      "serial_adb": "192.168.1.108:5555"
     }
   }
 }

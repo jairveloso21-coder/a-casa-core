@@ -4,6 +4,7 @@ from pathlib import Path
 
 PROIBIDOS = ["// resto do codigo", "# resto do codigo", "# implementar", "// todo", "# todo", "fixme", "raise notimplementederror"]
 ADB_PATH = r"C:\Users\jairv\AppData\Local\Microsoft\WinGet\Packages\Genymobile.scrcpy_Microsoft.Winget.Source_8wekyb3d8bbwe\scrcpy-win64-v4.1\adb.exe"
+PLANTA_PATH = Path(r"C:\Users\jairv\Desktop\casa core homologação\PLANTA_CASA.json")
 
 def extrair_json_bruto(texto: str) -> dict:
     texto = texto.strip()
@@ -11,154 +12,109 @@ def extrair_json_bruto(texto: str) -> dict:
     if bloco:
         texto = bloco.group(1)
     else:
-        inicio, fim = texto.find("{"), texto.rfind("}")
-        if inicio != -1 and fim != -1 and fim > inicio:
-            texto = texto[inicio:fim+1]
+        i, f = texto.find("{"), texto.rfind("}")
+        if i != -1 and f > i: texto = texto[i:f+1]
     return json.loads(texto)
 
 def hash_logico(texto: str) -> str:
     linhas = [re.sub(r"\s+", " ", l.strip()) for l in texto.splitlines() if l.strip() and not l.strip().startswith(("#", "//"))]
     return hashlib.sha256("\n".join(linhas).encode("utf-8")).hexdigest()
 
-def auditar_e_testar_mobile(bin_path: Path) -> tuple[bool, str, str]:
-    if not bin_path.exists():
-        return False, f"Binario nao gerado: {bin_path}", ""
-    cab = bin_path.read_bytes()[:64]
-    
-    # 1. Binario nativo ELF (ARM 32-bit)
-    if cab.startswith(b"\x7fELF"):
-        classe_bits = cab[4]
-        maquina = int.from_bytes(cab[18:20], "little")
-        if classe_bits != 1 or maquina != 40:
-            return False, f"ELF invalido (classe={classe_bits}, machine={hex(maquina)}). O celular AFTKM exige ARM 32-bit (armeabi-v7a).", ""
-        
-        # Execucao real no celular AFTKM via ADB
-        check_adb = subprocess.run(f'"{ADB_PATH}" devices', shell=True, capture_output=True, text=True)
-        if "\tdevice" in check_adb.stdout:
-            remoto = f"/data/local/tmp/{bin_path.name}"
-            subprocess.run(f'"{ADB_PATH}" push "{bin_path}" "{remoto}"', shell=True, capture_output=True)
-            subprocess.run(f'"{ADB_PATH}" shell chmod 755 "{remoto}"', shell=True, capture_output=True)
-            exec_adb = subprocess.run(f'"{ADB_PATH}" shell "{remoto}"', shell=True, capture_output=True, text=True, timeout=15)
-            if exec_adb.returncode != 0:
-                return False, f"Binario ELF ARM32 compilou, mas falhou ao rodar no celular AFTKM: {exec_adb.stderr}", ""
-            return True, "ELF ARM 32-bit autenticado e executado no hardware AFTKM.", exec_adb.stdout.strip()
-        return True, "ELF ARM 32-bit autenticado (ADB offline para teste em hardware).", ""
+def obter_alvo_adb(alvo: str) -> tuple[str, str]:
+    if not PLANTA_PATH.exists(): return "", ""
+    planta = json.loads(PLANTA_PATH.read_text(encoding="utf-8-sig"))
+    chave = "celular_principal" if alvo == "CELULAR_GARNED" else "firestick_tv"
+    dev = planta.get("dispositivos", {}).get(chave, {})
+    return dev.get("serial_adb", ""), dev.get("arquitetura", "")
 
-    # 2. Pacote Android APK
+def auditar_mobile(bin_path: Path, alvo: str) -> tuple[bool, str, str]:
+    if not bin_path.exists(): return False, f"Binario nao gerado: {bin_path}", ""
+    serial, arch = obter_alvo_adb(alvo)
+    cab = bin_path.read_bytes()[:64]
+    if cab.startswith(b"\x7fELF"):
+        bits, maq = cab[4], int.from_bytes(cab[18:20], "little")
+        if arch == "armeabi-v7a" and (bits != 1 or maq != 40): return False, f"ELF invalido para {alvo}: exige ARM 32-bit.", ""
+        if arch == "arm64-v8a" and (bits != 2 or maq != 183): return False, f"ELF invalido para {alvo}: exige ARM 64-bit.", ""
+        chk = subprocess.run(f'"{ADB_PATH}" devices', shell=True, capture_output=True, text=True)
+        if serial and serial in chk.stdout:
+            rem = f"/data/local/tmp/{bin_path.name}"
+            subprocess.run(f'"{ADB_PATH}" -s {serial} push "{bin_path}" "{rem}"', shell=True, capture_output=True)
+            subprocess.run(f'"{ADB_PATH}" -s {serial} shell chmod 755 "{rem}"', shell=True, capture_output=True)
+            ex = subprocess.run(f'"{ADB_PATH}" -s {serial} shell "{rem}"', shell=True, capture_output=True, text=True, timeout=15)
+            if ex.returncode != 0: return False, f"Erro ao rodar em {alvo}: {ex.stderr}", ""
+            return True, f"Executado com sucesso em {alvo} ({serial}).", ex.stdout.strip()
+        return True, f"Binario autenticado para {alvo} (offline no ADB).", ""
     if cab.startswith(b"PK\x03\x04") and bin_path.suffix.lower() == ".apk":
         with zipfile.ZipFile(bin_path, "r") as z:
             libs = [f for f in z.namelist() if f.startswith("lib/")]
-            if libs and not any(f.startswith("lib/armeabi-v7a/") for f in libs):
-                return False, "APK sem pasta lib/armeabi-v7a/ para o dispositivo AFTKM.", ""
-        return True, "APK armeabi-v7a autenticado.", ""
+            if libs and arch and not any(f.startswith(f"lib/{arch}/") for f in libs):
+                return False, f"APK sem lib/{arch}/ exigida por {alvo}.", ""
+        return True, f"APK {alvo} ({arch}) autenticado.", ""
+    return True, "Artefato OK.", ""
 
-    return True, "Artefato verificado.", ""
-
-def gerar_mensagem_retorno(res: dict) -> str:
+def msg_retorno(res: dict) -> str:
     if res["status"] == "HOMOLOGADO_SUCESSO":
-        return (
-            f"[A CASA - CERTIFICADO DE HOMOLOGAÇÃO PERC v8.0]\n"
-            f"OS: {res.get('id_os')} | Hash Lógico: {res.get('hash')}\n"
-            f"Auditoria Binária: {res.get('binario')}\n"
-            f"Saída em Hardware/Teste: {res.get('validacao')}\n"
-            f"Status: APROVADO E VALIDADO. ChatGPT, pode realizar a auditoria final."
-        )
-    return (
-        f"[A CASA - REJEIÇÃO AUTOMÁTICA PERC v8.0]\n"
-        f"Status: {res['status']}\n"
-        f"Motivo/Log de Erro:\n{res.get('motivo') or res.get('stderr')}\n\n"
-        f"QWEN: Corrija o erro acima respeitando estritamente o PROTOCOLO_PERC_V5.md e devolva o JSON completo atualizado."
-    )
+        return f"[A CASA - HOMOLOGADO PERC v8.2]\nOS: {res.get('id_os')} | Alvo: {res.get('alvo')} | Hash: {res.get('hash')}\nAuditoria: {res.get('binario')}\nSaida: {res.get('validacao')}\nStatus: APROVADO. ChatGPT, pode auditar."
+    return f"[A CASA - REJEITADO PERC v8.2]\nStatus: {res['status']}\nErro:\n{res.get('motivo') or res.get('stderr')}\n\nQWEN: Corrija e devolva o JSON completo."
 
 def processar_texto_ou_arquivo(entrada: str) -> dict:
     p = Path(entrada)
     raw = p.read_text(encoding="utf-8-sig") if p.exists() else entrada
-    try:
-        dados = extrair_json_bruto(raw)
+    try: dados = extrair_json_bruto(raw)
     except Exception as e:
-        res = {"status": "REJEITADO_JSON", "motivo": f"JSON invalido na resposta da Qwen: {e}"}
-        res["prompt_retorno"] = gerar_mensagem_retorno(res)
-        return res
-
-    alvo = dados.get("alvo", "")
-    dest = Path(dados.get("arquivo_destino", ""))
+        r = {"status": "REJEITADO_JSON", "motivo": str(e)}
+        r["prompt_retorno"] = msg_retorno(r)
+        return r
+    alvo, dest = dados.get("alvo", ""), Path(dados.get("arquivo_destino", ""))
     bin_out = Path(dados["binario_gerado"]) if dados.get("binario_gerado") else None
-    cod = dados.get("codigo_completo", "")
-    build = dados.get("comando_build", "")
-    val = dados.get("comando_validacao", "")
-
-    if not dest or not cod or not build:
-        res = {"status": "REJEITADO_CONTRATO", "motivo": "Campos obrigatorios ausentes no JSON."}
-        res["prompt_retorno"] = gerar_mensagem_retorno(res)
-        return res
-
-    if len(cod.splitlines()) < 5 or any(t in cod.lower() for t in PROIBIDOS):
-        res = {"status": "REJEITADO_PREGUICA", "motivo": "Codigo truncado ou contem placeholders proibidos (TODO, ..., resto do codigo)."}
-        res["prompt_retorno"] = gerar_mensagem_retorno(res)
-        return res
-
+    cod, build, val = dados.get("codigo_completo", ""), dados.get("comando_build", ""), dados.get("comando_validacao", "")
+    if not dest or not cod or not build or len(cod.splitlines()) < 5 or any(t in cod.lower() for t in PROIBIDOS):
+        r = {"status": "REJEITADO_CONTRATO", "motivo": "Codigo ausente, truncado ou com placeholders proibidos."}
+        r["prompt_retorno"] = msg_retorno(r)
+        return r
     h_novo = hash_logico(cod)
     if dest.exists() and h_novo == hash_logico(dest.read_text(encoding="utf-8", errors="ignore")):
-        res = {"status": "REJEITADO_CLONE", "motivo": "Codigo logicamente identico ao anterior (SHA-256 igual)."}
-        res["prompt_retorno"] = gerar_mensagem_retorno(res)
-        return res
-
-    if alvo == "ANDROID_ARMV7" and "arm64-v8a" in cod.lower() and "armeabi-v7a" not in cod.lower():
-        res = {"status": "REJEITADO_ARQ", "motivo": "Codigo configurado para arm64-v8a. O alvo AFTKM exige armeabi-v7a."}
-        res["prompt_retorno"] = gerar_mensagem_retorno(res)
-        return res
-
+        r = {"status": "REJEITADO_CLONE", "motivo": "Codigo identico ao anterior (SHA-256 igual)."}
+        r["prompt_retorno"] = msg_retorno(r)
+        return r
     bkp = None
     if dest.exists():
-        bkp_dir = dest.parent / ".casa_sandbox"
-        bkp_dir.mkdir(parents=True, exist_ok=True)
-        bkp = bkp_dir / f"{dest.name}.{datetime.now().strftime('%Y%m%d_%H%M%S')}.bak"
+        bdir = dest.parent / ".casa_sandbox"
+        bdir.mkdir(parents=True, exist_ok=True)
+        bkp = bdir / f"{dest.name}.{datetime.now().strftime('%Y%m%d_%H%M%S')}.bak"
         shutil.copy2(dest, bkp)
-
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(cod, encoding="utf-8")
-
-    p_build = subprocess.run(build, shell=True, capture_output=True, text=True)
-    if p_build.returncode != 0:
+    pb = subprocess.run(build, shell=True, capture_output=True, text=True)
+    if pb.returncode != 0:
         if bkp: shutil.copy2(bkp, dest)
-        res = {"status": "FALHA_BUILD_ROLLBACK", "stderr": "\n".join((p_build.stderr or p_build.stdout).splitlines()[-30:])}
-        res["prompt_retorno"] = gerar_mensagem_retorno(res)
-        return res
-
-    msg_bin, saida_adb = "N/A", ""
-    if bin_out and alvo == "ANDROID_ARMV7":
-        ok, msg_bin, saida_adb = auditar_e_testar_mobile(bin_out)
+        r = {"status": "FALHA_BUILD_ROLLBACK", "stderr": "\n".join((pb.stderr or pb.stdout).splitlines()[-30:])}
+        r["prompt_retorno"] = msg_retorno(r)
+        return r
+    m_bin, s_adb = "N/A", ""
+    if bin_out and alvo in ("CELULAR_GARNED", "FIRESTICK_AFTKM"):
+        ok, m_bin, s_adb = auditar_mobile(bin_out, alvo)
         if not ok:
             if bkp: shutil.copy2(bkp, dest)
-            res = {"status": "REJEITADO_BINARIO_ROLLBACK", "motivo": msg_bin}
-            res["prompt_retorno"] = gerar_mensagem_retorno(res)
-            return res
-
-    saida_val = saida_adb if saida_adb else "OK"
+            r = {"status": "REJEITADO_BINARIO_ROLLBACK", "motivo": m_bin}
+            r["prompt_retorno"] = msg_retorno(r)
+            return r
+    s_val = s_adb if s_adb else "OK"
     if val:
-        p_val = subprocess.run(val, shell=True, capture_output=True, text=True)
-        if p_val.returncode != 0:
+        pv = subprocess.run(val, shell=True, capture_output=True, text=True)
+        if pv.returncode != 0:
             if bkp: shutil.copy2(bkp, dest)
-            res = {"status": "FALHA_TESTE_ROLLBACK", "stderr": "\n".join((p_val.stderr or p_val.stdout).splitlines()[-30:])}
-            res["prompt_retorno"] = gerar_mensagem_retorno(res)
-            return res
-        saida_val = "\n".join(p_val.stdout.splitlines()[-10:])
-
-    res = {
-        "status": "HOMOLOGADO_SUCESSO",
-        "id_os": dados.get("id_os", "N/A"),
-        "hash": h_novo[:16],
-        "binario": msg_bin,
-        "validacao": saida_val
-    }
-    res["prompt_retorno"] = gerar_mensagem_retorno(res)
-    return res
+            r = {"status": "FALHA_TESTE_ROLLBACK", "stderr": "\n".join((pv.stderr or pv.stdout).splitlines()[-30:])}
+            r["prompt_retorno"] = msg_retorno(r)
+            return r
+        s_val = "\n".join(pv.stdout.splitlines()[-10:])
+    r = {"status": "HOMOLOGADO_SUCESSO", "id_os": dados.get("id_os", "N/A"), "alvo": alvo, "hash": h_novo[:16], "binario": m_bin, "validacao": s_val}
+    r["prompt_retorno"] = msg_retorno(r)
+    return r
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("entrada", help="Caminho de arquivo JSON ou string bruta")
-    args = ap.parse_args()
-    resultado = processar_texto_ou_arquivo(args.entrada)
-    print(json.dumps(resultado, indent=2, ensure_ascii=False))
-    sys.exit(0 if resultado["status"] == "HOMOLOGADO_SUCESSO" else 1)
-
+    ap.add_argument("entrada")
+    res = processar_texto_ou_arquivo(ap.parse_args().entrada)
+    print(json.dumps(res, indent=2, ensure_ascii=False))
+    sys.exit(0 if res["status"] == "HOMOLOGADO_SUCESSO" else 1)

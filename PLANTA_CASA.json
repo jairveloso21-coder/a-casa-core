@@ -22,10 +22,19 @@
         "wsl": "C:\\Windows\\system32\\wsl.exe"
       }
     },
-    "celular_alvo": {
+    "celular_principal": {
+      "nome": "garned",
+      "papel": "Dispositivo mobile principal de execucao e testes",
+      "android": "Android",
+      "arquitetura": "arm64-v8a",
+      "serial_adb": ""
+    },
+    "firestick_tv": {
       "modelo": "AFTKM",
+      "papel": "Amazon Fire TV Stick (nao confundir com o celular garned)",
       "android": "11",
-      "arquitetura_obrigatoria": "armeabi-v7a"
+      "arquitetura": "armeabi-v7a",
+      "serial_adb": "192.168.1.108:5555"
     }
   }
 }
