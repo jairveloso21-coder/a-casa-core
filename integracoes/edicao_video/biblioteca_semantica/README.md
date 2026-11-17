@@ -77,3 +77,6 @@ Sem `--source-root`, a ferramenta apenas valida **declarações** de proveniênc
 - Não classificar SOURCE como HOST/DEVICE.
 
 Veja também [guia de continuidade V3](../GUIA_EDITORIAL_CONTINUIDADE_V3.md) e [especificação de entendimento visual](../MOTOR_ENTENDIMENTO_VISUAL_V1.md).
+
+
+**Estado reconciliado 17/11/2026:** usar [registro de evidências](../HOMOLOGACAO_RECONCILIADA_20261117.md) e `manifest.json#homologation_reconciliation_20261117`. O MP4 R26.1 está presente e íntegro, porém **reprovado em SDR BT.709 e loudness** no QA independente; REA CP35 HOST foi decomposição técnica sem VLM e não homologa semântica de Stellar Blade. Não refazer worker nem vozes já aprovadas.
