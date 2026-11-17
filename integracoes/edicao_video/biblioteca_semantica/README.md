@@ -1,3 +1,10 @@
+<!-- CASA_20261117_EVIDENCE_SCOPE_FIX -->
+## Estado operacional por componente — reconciliação de 17/11/2026
+
+A homologação global do **CASA Core** não homologa automaticamente cada capacidade. Os recibos atuais de **REA Video CP34/CP35** no FAMILIA comprovam `probe` e `decompose` de um vídeo técnico de 7 s, com VLM/OCR/ASR desligados; não são prova de interpretação visual de Stellar Blade. A **decupagem manual V5** do original Stellar Blade, SHA-256 `5678a1b033a815a90b97c615e5d87fba3afe6e74275146310bbfb426df5fb5b5`, já foi feita no sandbox e deve ser reutilizada. A **Eve R26.1** foi aprovada artisticamente em cinco WAVs e o ZIP está preservado no Drive, mas falta a assinatura CASA SSHSIG. O `render_original.py` e o `qa_video_lote.py` têm provas de SANDBOX; esses módulos específicos não possuem recibo HOST FAMILIA e o renderer ainda não executa mixagem R26.1. **Nenhum MP4 final da cadeia original→cenas→roteiro→R26.1→FFmpeg→QA foi homologado nesta auditoria.**
+
+**Gate canônico e rotas:** `jairveloso21-coder/Projetos-Arquivo@main:CANONICAL_SYSTEM_STATE.json#homologation_scope_reconciliation_20261117`, catálogo `chatgpt-ops/operational/homologation/CASA_HOMOLOGATION_RECONCILIATION_20261117.json` e Skill `chatgpt-ops/skills/casa-project-resume/SKILL.md`. Os documentos e commits são fonte, não comprovam instalação, reconhecimento automático pelo Qwen, execução no FAMILIA ou publicação. Preservar mídia original, voz aprovada e backups; não reexecutar trabalhos de efeito incerto.
+
 <!-- CASA_VOICEOVER_LAB_V1 -->
 ## Dublagem de personagem / voice-over V1
 

@@ -16,6 +16,16 @@ Evidências já existentes (não repetir nem renomear missões):
 
 **Fechamento de dependência:** `VISUAL_MODEL_NOT_HOMOLOGATED` deixa de bloquear a produção. Isso fecha somente o bloqueio de roteamento/documentação, não dispensa QA e renderização de cada vídeo nem permite declarar o vídeo do usuário pronto.
 
+## EVIDENCE_SCOPE_RECONCILIATION_20261117 — Estado tecnico observado vs motor semantico
+
+**A especificacao de inferencia Qwen3-VL continua NAO HOMOLOGADA. Isso NAO anula outras homologacoes.** O FAMILIA ja executou REA Video `probe` (CP34) e `decompose` (CP35) sobre **CP30_QWEN_EDGE_CADU_NARRATED_TECH_ONLY.mp4**, clipe tecnico de 7 segundos, com `--no-vlm --no-ocr` e sem ASR. Recibos no repositório `jairveloso21-coder/Projetos-Arquivo`: `missions/outbox/CANAL_DARK/M_20261116_CANAL_DARK_CP34_REA_PINNED_READONLY_PROBE_V1_receipt.json` e `M_20261116_CANAL_DARK_CP35_REA_DECOMPOSE_REAL_MEDIA_V1_receipt.json` (mesma pasta). Eles comprovam capacidade tecnica delimitada; nao demonstram que a luta de Stellar Blade foi entendida por um VLM.
+
+**Ja existe decupagem humana/assistida do original** no artefato privado `DECUPAGEM_INTERNA_V5.json`, com original `20261116_182602_00670977.webm`, SHA-256 `5678a1b033a815a90b97c615e5d87fba3afe6e74275146310bbfb426df5fb5b5`. Eventos documentados em ~6, 23, 60, 120, 154, 168, 175 segundos; referencia editorial do SANDBOX, nao produto de inferencia local e nao garantia automatica de fidelidade sem reabrir quadros. Reutilizar esta referencia e preservar original; **nao** recomecar a decupagem do zero.
+
+**Renderizador e QA V6 existem em codigo e tiveram teste SANDBOX**, mas nao possuem recibo de execucao desses modulos especificos no FAMILIA. O renderer atual recusa HDR PQ/HLG e nao integra automaticamente Eve R26.1. A biblioteca de 5 WAVs R26.1, aprovada artisticamente, esta no Google Drive como ZIP com SHA-256 `ceb3df3383276149bb8663df3a5f50566bd596fbae61557e9f25b556c8eeb34a`, sob lock `chatgpt-ops/operational/voice-library/CANAL_DARK_R26_1_LOCK.json`; assinatura CASA SSHSIG pendente. Nenhum MP4 final com mixagem R26.1 e QA HOST foi verificado nesta auditoria.
+
+**Fonte canônica de reconciliação:** `Projetos-Arquivo/chatgpt-ops/operational/homologation/CASA_HOMOLOGATION_RECONCILIATION_20261117.json`. SOURCE/CI/HOST/DEVICE/aceite editorial sempre separados. Atualizar apenas mediante prova real especifica de novo estágio, nunca por commit, texto SUCCESS ou pela homologacao geral do bootstrap.
+
 ## Motivo
 A montagem V2/V3 usava heurísticas de duração e aparência de quadros, sem representar semanticamente o que acontece. Cortes podem ficar tecnicamente contínuos, mas narrativamente incompletos. O motor transforma a **gravação original** em um **índice temporal privado de eventos em texto**; não cria legendas e não insere esse texto no vídeo.
 
