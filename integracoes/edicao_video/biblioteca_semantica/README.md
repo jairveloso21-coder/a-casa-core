@@ -1,3 +1,8 @@
+<!-- CASA_VOICEOVER_LAB_V1 -->
+## Dublagem de personagem / voice-over V1
+
+[GUIA_DUBLAGEM_CENAS_V1.md](./GUIA_DUBLAGEM_CENAS_V1.md) documenta sincronização de falas, voice stems, mixagem com áudio do gameplay, loudness e QA da narração sobre mídia ORIGINAL. O texto de compreensão de cena é privado. No piloto Stellar Blade, uma voz feminina eSpeak local foi usada **apenas como prévia de sincronização**; ElevenLabs e voz original da atriz **não** estão conectados/homologados.
+
 <!-- CASA_ORIGINAL_RENDERER_V6 -->
 ## Renderizador reutilizável a partir do original (V6)
 
