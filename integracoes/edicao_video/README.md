@@ -1,3 +1,12 @@
+<!-- CASA_VIDEO_HOST_ROUTE_RECONCILED_20261117 -->
+## Estado operacional canônico — não reabrir bloqueio opcional de VLM
+
+A edição CASA **já tem caminho técnico comprovado no FAMILIA**: REA Video decompôs mídia real no CP35, MakeMyClip 0.5.2 renderizou e decodificou integralmente MP4 de teste no CPD, e seu MCP local de leitura respondeu com oito ferramentas no CPE. O editor está disponível sob demanda; não exigir instalação do Qwen3-VL nem assinatura de serviço pago para continuar trabalhos de vídeo.
+
+**Atenção às camadas:** `MOTOR_ENTENDIMENTO_VISUAL_V1.md` é proposta de **inferência visual automática opcional**, não o editor. `biblioteca_semantica/semantic_timeline.py`, `render_original.py` e `qa_video_lote.py` têm prova SOURCE/SANDBOX, mas ainda **não** prova física própria de HOST. Provas de REA/MakeMyClip não se transferem automaticamente para esses módulos. Trabalhos com arquivo específico exigem observação de quadros, render e QA próprios; não alegar entrega sem MP4 verificável.
+
+**Registro único:** `Projetos-Arquivo/CANONICAL_SYSTEM_STATE.json.video_studio_ai_global_checkpoint.visual_inference_routing_reconciliation`; recibos HOST em `Projetos-Arquivo/missions/outbox/`. Rota alternativa gratuita: REA Video → observações validadas → MakeMyClip 0.5.2 ou FFmpeg → QA; Qwen3-VL não é gate. Sem gerar novo manifesto redundante ou baixar novamente ferramentas comprovadas.
+
 <!-- CASA_EXECUTABLE_QA_V6 -->
 ## QA reutilizável de lote V6
 
@@ -13,7 +22,7 @@ A [biblioteca semântica / guia de exportação V5](./biblioteca_semantica/GUIA_
 
 A nova [biblioteca_semantica](./biblioteca_semantica/README.md) padroniza anotações **textuais internas** de ações e resultados da gravação ORIGINAL, valida continuidade/causalidade e gera uma EDL proposta sem sobrepor o texto na imagem. Contém [código Python](./biblioteca_semantica/semantic_timeline.py), [contrato JSON](./biblioteca_semantica/schema.json), [testes de regressão](./biblioteca_semantica/tests/test_semantic_timeline.py), [skill-fonte](./biblioteca_semantica/SKILL.md) e [registro de estado](./biblioteca_semantica/manifest.json).
 
-**Gates:** SOURCE publicado e relido; testes do código, CI, instalação no FAMILIA e integração a um modelo visual real ainda NÃO comprovados. A biblioteca não integra automaticamente Qwen3-VL ou FFmpeg e não é uma skill instalada no host.
+**Gates deste submódulo semântico (não do editor CASA inteiro):** SOURCE publicado e relido; `semantic_timeline.py` sem instalação física própria verificada. A produção usa a cadeia REA Video + MakeMyClip/FFmpeg já comprovada no HOST, sem depender do modelo visual opcional.
 
 <!-- MOTOR_SEMANTICO_INTERNO_V1 -->
 ## Motor de compreensão semântica — proposta V1
