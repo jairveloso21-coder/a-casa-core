@@ -1,3 +1,10 @@
+<!-- MOTOR_SEMANTICO_INTERNO_V1 -->
+## Motor de compreensão semântica — proposta V1
+
+**Regra:** a leitura da gravação original gera uma linha do tempo **interna, textual e privada** de eventos com timestamps e níveis de confiança antes da escolha dos cortes. Ela nunca é exibida como legenda ou sobreposição no render.
+
+Consulte [MOTOR_ENTENDIMENTO_VISUAL_V1.md](./MOTOR_ENTENDIMENTO_VISUAL_V1.md) para contrato, ferramentas candidatas e gates de validação. O documento existe no SOURCE; Qwen3-VL e whisper.cpp **não foram instalados nem homologados no HOST FAMILIA**. Exemplo com dados reais de gameplay mantido apenas no ambiente privado da conversa, fora do repositório público.
+
 <!-- CASA_VIDEO_V3_CONTINUIDADE -->
 ## Regra prioritária desde V3 (16/11/2026)
 
