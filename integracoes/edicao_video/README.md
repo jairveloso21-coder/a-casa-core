@@ -1,3 +1,8 @@
+<!-- CASA_EXECUTABLE_QA_V6 -->
+## QA reutilizável de lote V6
+
+A [biblioteca semântica](./biblioteca_semantica/README.md) agora inclui [qa_video_lote.py](./biblioteca_semantica/qa_video_lote.py), um validador reutilizável de vídeo, áudio, hashes e continuidade dos Shorts, executado em um piloto real no sandbox. O [manual V6](./biblioteca_semantica/QA_EXECUTAVEL_V6.md) e o [manifesto](./biblioteca_semantica/manifest.json) distinguem SOURCE/SANDBOX de CI/HOST/DEVICE. Nenhuma homologação física do FAMILIA foi alegada.
+
 <!-- CASA_VIDEO_EXPORT_V5 -->
 ## Correção de exportação V5
 
