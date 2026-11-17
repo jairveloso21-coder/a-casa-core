@@ -1,3 +1,10 @@
+<!-- CASA_VIDEO_EXPORT_V5 -->
+## Exportação social e revisão visual V5
+
+O [guia reutilizável V5](./GUIA_EXPORTACAO_SOCIAL_V5.md) documenta perfil HDR→SDR, validação de BT.709, MP4 compatível e revisão visual dos Shorts com a imagem de gameplay ocupando área suficiente. As anotações semânticas são **privadas** e não aparecem no vídeo.
+
+Piloto: **6/6 MP4s passaram nos testes de decodificação do sandbox**, com originais preservados e hashes reconferidos. **Não testado no host FAMILIA nem reproduzido fisicamente no dispositivo do usuário.**
+
 # CASA — Biblioteca Semântica de Vídeo v1.0
 
 **Módulo global e reutilizável** para projetos de edição que usam gravações originais. Caminho: `integracoes/edicao_video/biblioteca_semantica/`.
