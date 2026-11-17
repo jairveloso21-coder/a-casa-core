@@ -1,3 +1,10 @@
+<!-- CASA_SEMANTIC_VIDEO_LIBRARY_V1 -->
+## Biblioteca global de decupagem semântica v1.0
+
+A nova [biblioteca_semantica](./biblioteca_semantica/README.md) padroniza anotações **textuais internas** de ações e resultados da gravação ORIGINAL, valida continuidade/causalidade e gera uma EDL proposta sem sobrepor o texto na imagem. Contém [código Python](./biblioteca_semantica/semantic_timeline.py), [contrato JSON](./biblioteca_semantica/schema.json), [testes de regressão](./biblioteca_semantica/tests/test_semantic_timeline.py), [skill-fonte](./biblioteca_semantica/SKILL.md) e [registro de estado](./biblioteca_semantica/manifest.json).
+
+**Gates:** SOURCE publicado e relido; testes do código, CI, instalação no FAMILIA e integração a um modelo visual real ainda NÃO comprovados. A biblioteca não integra automaticamente Qwen3-VL ou FFmpeg e não é uma skill instalada no host.
+
 <!-- MOTOR_SEMANTICO_INTERNO_V1 -->
 ## Motor de compreensão semântica — proposta V1
 
