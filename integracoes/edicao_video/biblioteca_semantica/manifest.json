@@ -107,5 +107,54 @@
     "blocking_dependency": "NONE_FROM_OPTIONAL_VLM",
     "selected_job_proof_required": "SOURCE_MEDIA_HASH_AND_FRAME_OBSERVATIONS_PLUS_RENDER_QA",
     "canonical_state": "jairveloso21-coder/Projetos-Arquivo:CANONICAL_SYSTEM_STATE.json.video_studio_ai_global_checkpoint.visual_inference_routing_reconciliation"
+  },
+  "homologation_reconciliation_20261117": {
+    "schema": "CASA_SEMANTIC_VIDEO_V6_EVIDENCE_SCOPE_V1",
+    "source_of_truth": "jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/homologation/CASA_HOMOLOGATION_RECONCILIATION_20261117.json",
+    "code_reused_without_duplication": true,
+    "manual_stellar_decoupage": "SANDBOX_V5_OBSERVATION_SHA256_ORIGINAL",
+    "source_original_sha256": "5678a1b033a815a90b97c615e5d87fba3afe6e74275146310bbfb426df5fb5b5",
+    "realm_breakdown": {
+      "scope": "FAMILIA_CP35_REAL_REA_VIDEO_DECOMPOSE",
+      "input_media": "CP30_QWEN_EDGE_CADU_NARRATED_TECH_ONLY.mp4",
+      "vlm": false,
+      "asr": false,
+      "ocr": false,
+      "stellar_original_analyzed": false
+    },
+    "engine_qwen3_vl_host": "SPEC_SOURCE_ONLY_NOT_HOMOLOGATED",
+    "renderer_v6": {
+      "sandbox_tests": true,
+      "familia_host_receipt": null,
+      "version_source": "render_original.py",
+      "eve_r26_1_voice_mix_implemented": false
+    },
+    "qa_v6": {
+      "sandbox_unit_and_media_tests": true,
+      "familia_host_receipt": null,
+      "version_source": "qa_video_lote.py"
+    },
+    "r26_1_voice_lock": "jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/voice-library/CANAL_DARK_R26_1_LOCK.json",
+    "r26_1_archive": "APPROVED_ARTISTICALLY_CASA_SSHSIG_PENDING",
+    "e2e_final_mp4": "NOT_ATTESTED",
+    "no_project_data_copied": true,
+    "no_existing_source_deleted": true,
+    "signatures_not_inferred_from_json": true,
+    "r26_1_real_video_media_qa": {
+      "source": "jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/homologation/CASA_EVE_R26_1_INDEPENDENT_MEDIA_QA_20261117.json",
+      "mp4_drive_id": "1GN48QKXknZ9G_r2W_gYCXZdvVyf1GNKh",
+      "mp4_sha256": "671db8ebd521212291c98e6dab0acdde13ab5dbf2e8de53c4dc298be64a7b531",
+      "independent_drive_bytes_sha256_matches": true,
+      "full_decode_pass": true,
+      "release_qa": "FAIL_HDR_COLOR_AND_LOUDNESS",
+      "actual_color": "BT2020_PQ_HDR10",
+      "target_sdr_bt709": false,
+      "measured_integrated_lufs": -25.28,
+      "target_minus_18_plusminus_3_lufs": false,
+      "original_preserved": true,
+      "voice_library_preserved": true,
+      "final_owner_editorial_qa": false,
+      "scope": "SANDBOX_AV_INSPECTION_NOT_FAMILIA_SSHSIG_OR_DEVICE"
+    }
   }
 }
