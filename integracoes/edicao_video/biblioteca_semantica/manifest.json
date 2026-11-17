@@ -90,5 +90,22 @@
       "DEVICE": "NOT_TESTED"
     },
     "caveat": "Timed out after generating the smoke file before renderer manifest appeared; smoke output independently validated with QA utility. No CI/HOST claim."
+  },
+  "operational_video_routing": {
+    "status": "HOST_EDITOR_TECHNICALLY_PROVEN_VISUAL_MODEL_OPTIONAL",
+    "status_reconciled_on": "2026-11-17",
+    "exclusive_claim": "Existing CASA video workflow can edit and render without Qwen3-VL; the semantic-timeline module itself remains SOURCE / SANDBOX only until its own HOST proof.",
+    "editor_receipt": "jairveloso21-coder/Projetos-Arquivo:missions/outbox/GLOBAL_HOMOLOGATION/M_20261116_VIDEO_STUDIO_AI_CPD_MAKEMYCLIP_052_PARALLEL_AB_V1_receipt.json",
+    "editor_technical_result": "MakeMyClip 0.5.2 on FAMILIA; 4.79625s synthetic MP4; full decode; SHA256 60458314320da075f6ab7187232174b6203c250da5142e7543ec757356f6d974",
+    "editor_mcp_receipt": "jairveloso21-coder/Projetos-Arquivo:missions/outbox/GLOBAL_HOMOLOGATION/M_20261116_VIDEO_STUDIO_AI_CPE_MCP_052_READONLY_HOST_V1_receipt.json",
+    "video_analysis_receipt": "jairveloso21-coder/Projetos-Arquivo:missions/outbox/CANAL_DARK/M_20261116_CANAL_DARK_CP35_REA_DECOMPOSE_REAL_MEDIA_V1_receipt.json",
+    "auto_vlm_required": false,
+    "qwen3_vl_host_inference_verified": false,
+    "own_module_host_proven": false,
+    "own_module_source_sandbox_proven": true,
+    "device_video_validation": false,
+    "blocking_dependency": "NONE_FROM_OPTIONAL_VLM",
+    "selected_job_proof_required": "SOURCE_MEDIA_HASH_AND_FRAME_OBSERVATIONS_PLUS_RENDER_QA",
+    "canonical_state": "jairveloso21-coder/Projetos-Arquivo:CANONICAL_SYSTEM_STATE.json.video_studio_ai_global_checkpoint.visual_inference_routing_reconciliation"
   }
 }
