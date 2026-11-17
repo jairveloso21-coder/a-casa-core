@@ -1,0 +1,82 @@
+{
+  "schema_version": "casa.semantic-video/1.0",
+  "project_id": "demo_ficticio_sem_midia",
+  "annotation_visibility": "private_only",
+  "sources": [
+    {
+      "id": "capture_01",
+      "path": "original_gamplay_demo.webm",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "origin": "raw_capture",
+      "immutable": true,
+      "duration_seconds": 20.5
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "source_id": "capture_01",
+      "start_seconds": 0,
+      "end_seconds": 4,
+      "event_type": "setup",
+      "description_pt": "Personagem se aproxima de um obstáculo; o objetivo aparece.",
+      "evidence_seconds": [
+        1,
+        3
+      ],
+      "depends_on": [],
+      "result_observed": true,
+      "confidence": 0.91,
+      "render_as_overlay": false
+    },
+    {
+      "id": "e2",
+      "source_id": "capture_01",
+      "start_seconds": 4,
+      "end_seconds": 8,
+      "event_type": "action",
+      "description_pt": "Personagem salta sobre o obstáculo, sem corte interno.",
+      "evidence_seconds": [
+        5,
+        7
+      ],
+      "depends_on": [
+        "e1"
+      ],
+      "result_observed": true,
+      "confidence": 0.95,
+      "render_as_overlay": false
+    },
+    {
+      "id": "e3",
+      "source_id": "capture_01",
+      "start_seconds": 8,
+      "end_seconds": 12,
+      "event_type": "payoff",
+      "description_pt": "A gravação mostra a aterrissagem após o salto.",
+      "evidence_seconds": [
+        9,
+        11
+      ],
+      "depends_on": [
+        "e2"
+      ],
+      "result_observed": true,
+      "confidence": 0.92,
+      "render_as_overlay": false
+    }
+  ],
+  "shots": [
+    {
+      "source_id": "capture_01",
+      "in_seconds": 0,
+      "out_seconds": 12,
+      "event_ids": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "editorial_reason": "Mantém preparação, movimento completo e resultado observado."
+    }
+  ]
+}
