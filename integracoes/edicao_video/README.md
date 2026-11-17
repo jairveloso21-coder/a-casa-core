@@ -122,3 +122,5 @@ O código carrega os nomes de fonte indicados no dicionário `SOURCES` e as deci
 - [OpenTimelineIO](https://github.com/AcademySoftwareFoundation/OpenTimelineIO)
 
 **Status explícito:** estar catalogado não significa estar instalado nem homologado no FAMILIA.
+
+**Correção de continuidade 17/11/2026:** [Homologação reconciliada](./HOMOLOGACAO_RECONCILIADA_20261117.md) distingue REA CP34/CP35 já executados de VLM ainda não testado, preserva o MP4 R26.1 existente e registra sua reprovação em cor, loudness e revisão editorial. SOURCE não significa CI/HOST/DEVICE; não reconstruir biblioteca nem trabalhador R4.
