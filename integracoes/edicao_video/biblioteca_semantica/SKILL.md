@@ -11,7 +11,11 @@
 
 # Skill: CASA Semantic Video Decoupage v1.0
 
-**Status: documented source skill. Not registered/installed in Qwen or the HOST FAMILIA yet.**
+**Estado por capacidade (reconciliado 2026-11-17):** a Skill `semantic_timeline.py` específica permanece SOURCE (instalação independente no FAMILIA não demonstrada); **a edição de vídeo da CASA não está bloqueada**: REA Video teve decomposição real no FAMILIA (CP35), MakeMyClip 0.5.2 teve renderização técnica com decodificação integral (CPD) e seu MCP local de leitura foi testado (CPE). Estes recibos não comprovam instalação física desta Skill nem uso do Qwen3-VL.
+
+**Regra de despacho anti-bloqueio:** não exigir Qwen3-VL para continuar uma edição. Se a inferência visual automática não estiver instalada, usar REA Video para decomposição, inspeção de quadros acessíveis e marcação conservadora de eventos observados; produzir montagem via editor/FFmpeg operacional já comprovado, finalizar com QA real. Se não houver acesso aos quadros, manter o produto como `NEEDS_VISUAL_REVIEW` em vez de inventar a cena, e buscar uma rota autorizada de acesso à mídia. Não reiniciar downloads, não duplicar bibliotecas ou exigir contratação externa.
+
+**Evidência:** `../MOTOR_ENTENDIMENTO_VISUAL_V1.md` e recibos `Projetos-Arquivo/missions/outbox/CANAL_DARK/M_20261116_CANAL_DARK_CP35_REA_DECOMPOSE_REAL_MEDIA_V1_receipt.json`, `Projetos-Arquivo/missions/outbox/GLOBAL_HOMOLOGATION/M_20261116_VIDEO_STUDIO_AI_CPD_MAKEMYCLIP_052_PARALLEL_AB_V1_receipt.json` e `M_20261116_VIDEO_STUDIO_AI_CPE_MCP_052_READONLY_HOST_V1_receipt.json`. **Rota de edição habilitada; homologação do modelo visual opcional e da própria Skill não presumida.**
 
 ## When to use
 Every CASA project producing short videos from raw recordings, when the user wants smooth, engaging editing without jump cuts or false narratives.
