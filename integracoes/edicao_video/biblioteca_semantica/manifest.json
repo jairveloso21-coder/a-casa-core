@@ -51,7 +51,7 @@
     ],
     "status": {
       "SOURCE": "COMMITTED_AND_READBACK",
-      "SANDBOX_UNIT": "PASS_8_OF_8",
+      "SANDBOX_UNIT": "PASS_11_OF_11_WITH_RENDERER_TESTS",
       "SANDBOX_MEDIA": "PASS_3_OF_3",
       "CI": "NOT_EXECUTED",
       "HOST_FAMILIA": "NOT_TESTED",
@@ -64,5 +64,31 @@
       "source_mutation",
       "automatic_publication"
     ]
+  },
+  "renderer_original_v6": {
+    "version": "1.0.0",
+    "module": "render_original.py",
+    "tests": "tests/test_render_original.py",
+    "source_policy": "ONLY_ORIGINAL_SHA256_VERIFIED",
+    "input_contract": "casa.video.render/1.0",
+    "output_contract": "casa.video.export-qa/1.0",
+    "features": [
+      "configurable_crop",
+      "source_hash_enforced",
+      "source_duration_guard",
+      "no_caption_overlays",
+      "ffmpeg_h264_aac_loudnorm",
+      "reject_unhandled_HDR",
+      "no_implicit_overwrite"
+    ],
+    "status": {
+      "SOURCE": "COMMITTED_AND_READBACK",
+      "SANDBOX_UNIT": "PASS_3_OF_3",
+      "SANDBOX_SMOKE": "2S_MP4_VALIDATED_FULL_DECODE_AND_LOUDNESS",
+      "CI": "NOT_EXECUTED",
+      "HOST_FAMILIA": "NOT_TESTED",
+      "DEVICE": "NOT_TESTED"
+    },
+    "caveat": "Timed out after generating the smoke file before renderer manifest appeared; smoke output independently validated with QA utility. No CI/HOST claim."
   }
 }
