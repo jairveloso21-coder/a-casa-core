@@ -1,3 +1,16 @@
+<!-- CASA_ORIGINAL_RENDERER_V6 -->
+## Renderizador reutilizável a partir do original (V6)
+
+O módulo [render_original.py](./render_original.py) recebe JSON com `schema_version="casa.video.render/1.0"`, `sources` e `jobs`, exige SHA-256 dos arquivos originais e produz MP4 H.264/AAC com loudnorm. O crop vertical é uma escolha explícita por cena, e o módulo não desenha nenhum texto semântico na imagem.
+
+Uso: `python render_original.py config.json --sources-root /originais --exports-root /WIP --manifest /WIP/manifest_qa.json`
+
+Para um Short, o job informa `source_id`, `file`, `in_seconds`, `out_seconds`, `format="short"` e `crop={"x":0,"y":0,"w":608,"h":1080}` ajustado à gravação real. Para YouTube, `format="youtube_horizontal"`. O source informa `id`, `file`, `sha256`, `origin="raw_capture"`.
+
+**Não usar os números de exemplo como configurações do usuário.** Requer inspecionar o conteúdo e escolher enquadramento que preserve a ação. O renderer recusa HDR sem transformação explícita, não altera nem sobrescreve originais e não monta automaticamente uma história por IA. Sempre executar [qa_video_lote.py](./qa_video_lote.py) depois da renderização.
+
+**Evidência:** 11 testes unitários passaram no sandbox; um MP4 de 2 segundos foi produzido e aprovado no QA integral. O processo de renderização dessa prova excedeu o tempo limite antes de escrever o manifesto; a validação do MP4 foi refeita separadamente. CI, HOST FAMILIA e DEVICE não testados.
+
 <!-- CASA_EXECUTABLE_QA_V6 -->
 ## Biblioteca V6 executável — auditoria de lote
 
