@@ -1,3 +1,12 @@
+<!-- CASA_VIDEO_POST_QA_V2 -->
+## Bloqueio editorial de produção — destino, voz PT-BR, narrativa
+
+O caso CANAL_DARK Eve/Gigas R4 (17/11/2026) gerou MP4 técnico com FFmpeg, mas foi **reprovado pelo proprietário para postagem**: formato vertical imposto sem definir plataforma, nova narração com sotaque estrangeiro e áudio inteiro colocado em 156,799s (vídeo de 179,486s). A causa no código foi `start = video_duration - speech_duration - 3` mais nova geração por `voice_design_instruction` sem condicionamento pelo WAV original.
+
+**Regra transversal à CASA**: exigir `target_platform` selecionada pelo proprietário antes de export de publicação; travar voz a WAV SHA e exigir audição A/B humana de identidade/naturalidade/sotaque brasileiro; gerar timeline de falas por cenas observadas (início, meio, desfecho), nunca somente no final por fórmula de duração; rejeitar candidatos que falhem um desses gates independentemente de full decode. Manter o original e o MP4 reprovado para auditoria, sem instalar serviços pagos, duplicar síntese ou confundir técnico com editorial.
+
+**Validador compartilhado**: `jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/tools/casa-video-studio-ai/casa_video_release_gate_v2.py`; procedimentos em `.../skills/casa-video-studio-ai/SKILL.md` e `PROTOCOLO_PERC_V5.md`. Status R4 `TECHNICAL_PASS / EDITORIAL_REJECTED`, nunca `POST_READY` até revisão com provas e plataforma selecionada.
+
 <!-- CASA_VIDEO_HOST_ROUTE_RECONCILED_20261117 -->
 ## Estado operacional canônico — não reabrir bloqueio opcional de VLM
 
