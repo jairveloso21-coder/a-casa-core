@@ -1,6 +1,20 @@
 # CASA Video Lab — Motor de Entendimento Visual (proposta V1)
 
-Data: 2026-11-16. **Estado: ESPECIFICAÇÃO PUBLICADA / INFERÊNCIA AUTOMÁTICA NÃO HOMOLOGADA.**
+Data: 2026-11-16. **Situação reconciliada em 2026-11-17:** o **modelo opcional Qwen3-VL** de inferência visual automática continua sem homologação HOST; isso **NÃO bloqueia** a esteira de edição já comprovada no FAMILIA por recibos reais de REA Video, MakeMyClip e FFmpeg.
+
+## Gate operacional corrigido: VLM opcional, edição disponível
+
+**Não utilizar `QWEN3_VL_NOT_HOMOLOGATED` como motivo para impedir inspeção, decupagem humana/assistida, roteiro, dublagem e renderização.** A seleção de editor é independente da existência do modelo de entendimento visual. A sequência segura é: original íntegro com hash → REA Video decompose existente → observações visuais fundamentadas em quadros reais (ou REVISÃO NECESSÁRIA se inacessíveis) → timeline privada → editor MakeMyClip 0.5.2/FFmpeg conforme capacidade efetivamente disponível → QA de MP4 com prova física → aprovação editorial. Não gerar descrições falsas quando os quadros não foram inspecionados.
+
+Evidências já existentes (não repetir nem renomear missões):
+- FAMILIA / REA Video decompose real: `Projetos-Arquivo/missions/outbox/CANAL_DARK/M_20261116_CANAL_DARK_CP35_REA_DECOMPOSE_REAL_MEDIA_V1_receipt.json` — `REAL_REA_DECOMPOSE_PASS`, exit 0.
+- FAMILIA / MakeMyClip 0.5.2: `Projetos-Arquivo/missions/outbox/GLOBAL_HOMOLOGATION/M_20261116_VIDEO_STUDIO_AI_CPD_MAKEMYCLIP_052_PARALLEL_AB_V1_receipt.json` — `TECHNICAL_RENDER_PASS`, MP4 sintético 4,79625 s, full decode, SHA-256 `60458314320da075f6ab7187232174b6203c250da5142e7543ec757356f6d974`.
+- FAMILIA / MCP local de editor: `Projetos-Arquivo/missions/outbox/GLOBAL_HOMOLOGATION/M_20261116_VIDEO_STUDIO_AI_CPE_MCP_052_READONLY_HOST_V1_receipt.json` — `LOCAL_MCP_READONLY_PASS`, oito ferramentas.
+- CANAL DARK / CP33: `Projetos-Arquivo/missions/outbox/CANAL_DARK/M_20261116_CANAL_DARK_CP33_PROFESSIONAL_EVIDENCE_CASE_V1_receipt.json` — `CASE_TECHNICAL_PASS`, não prova dublagem comercial concluída.
+- Semântica V6 / `render_original.py` e `qa_video_lote.py`: SOURCE e testes SANDBOX documentados em `biblioteca_semantica/README.md`; **o próprio módulo V6 ainda não tem prova de execução HOST**. NÃO emprestar a ele a homologação de outro editor.
+- Qwen3-VL: candidato opcional, **HOST_INFERENCE_NOT_VERIFIED**. Uso real da ferramenta MCP pelo modelo Qwen também não comprovado; descoberta MCP não equivale a chamada.
+
+**Fechamento de dependência:** `VISUAL_MODEL_NOT_HOMOLOGATED` deixa de bloquear a produção. Isso fecha somente o bloqueio de roteamento/documentação, não dispensa QA e renderização de cada vídeo nem permite declarar o vídeo do usuário pronto.
 
 ## Motivo
 A montagem V2/V3 usava heurísticas de duração e aparência de quadros, sem representar semanticamente o que acontece. Cortes podem ficar tecnicamente contínuos, mas narrativamente incompletos. O motor transforma a **gravação original** em um **índice temporal privado de eventos em texto**; não cria legendas e não insere esse texto no vídeo.
