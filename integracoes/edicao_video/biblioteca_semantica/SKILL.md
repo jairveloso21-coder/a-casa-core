@@ -1,3 +1,14 @@
+<!-- CASA_ORIGINAL_RENDERER_V6 -->
+## Integração de renderização original-only e QA V6
+
+1. Verificar SHA-256 físico de gravações originais; rejeitar qualquer arquivo V1/V2/V5 exportado como fonte.
+2. Produzir descrições de cenas em JSON interno com timestamps; jamais queimar essas descrições no vídeo.
+3. Selecionar sequências completas, causa/ação/consequência e enquadramento que preserve protagonista e objetivo.
+4. Executar `render_original.py` com manifesto de fonte, intervalos e crop explícito; salvar só em WIP separado.
+5. Usar `qa_video_lote.py` para verificar hashes, H.264/AAC, BT.709, duração, loudness/true peak, sobreposição dos Shorts e decodificação integral.
+6. Tratar HDR como situação especial que exige pipeline explícito e validado; não fingir SDR mudando apenas etiquetas.
+7. Entregar recibos SOURCE/SANDBOX/CI/HOST/DEVICE separadamente. Publicação/retention exige evidência real.
+
 # Skill: CASA Semantic Video Decoupage v1.0
 
 **Status: documented source skill. Not registered/installed in Qwen or the HOST FAMILIA yet.**
