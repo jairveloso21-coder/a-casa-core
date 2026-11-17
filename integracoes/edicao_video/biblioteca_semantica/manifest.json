@@ -37,5 +37,32 @@
     "DEVICE": "NOT_TESTED",
     "MODEL_INFERENCE": "NOT_INSTALLED"
   },
-  "notes": "Provides validator and proposed EDL only; no video-understanding model, render pipeline, or editor integration is installed."
+  "notes": "Provides validator and proposed EDL only; no video-understanding model, render pipeline, or editor integration is installed.",
+  "qa_export_batch_v6": {
+    "version": "1.0.0",
+    "module": "qa_video_lote.py",
+    "tests": "tests/test_qa_video_lote.py",
+    "guide": "QA_EXECUTAVEL_V6.md",
+    "purpose": "Read-only original/export SHA256, H264/AAC, BT709, EBU R128 loudness/true peak, overlapping Shorts and full decode QA",
+    "requires": [
+      "Python 3.10+",
+      "FFmpeg",
+      "ffprobe"
+    ],
+    "status": {
+      "SOURCE": "COMMITTED_AND_READBACK",
+      "SANDBOX_UNIT": "PASS_8_OF_8",
+      "SANDBOX_MEDIA": "PASS_3_OF_3",
+      "CI": "NOT_EXECUTED",
+      "HOST_FAMILIA": "NOT_TESTED",
+      "DEVICE": "NOT_TESTED",
+      "PUBLICATION": "NOT_TESTED"
+    },
+    "excludes": [
+      "video_understanding_inference",
+      "video_rendering",
+      "source_mutation",
+      "automatic_publication"
+    ]
+  }
 }
