@@ -139,6 +139,22 @@
     "e2e_final_mp4": "NOT_ATTESTED",
     "no_project_data_copied": true,
     "no_existing_source_deleted": true,
-    "signatures_not_inferred_from_json": true
+    "signatures_not_inferred_from_json": true,
+    "r26_1_real_video_media_qa": {
+      "source": "jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/homologation/CASA_EVE_R26_1_INDEPENDENT_MEDIA_QA_20261117.json",
+      "mp4_drive_id": "1GN48QKXknZ9G_r2W_gYCXZdvVyf1GNKh",
+      "mp4_sha256": "671db8ebd521212291c98e6dab0acdde13ab5dbf2e8de53c4dc298be64a7b531",
+      "independent_drive_bytes_sha256_matches": true,
+      "full_decode_pass": true,
+      "release_qa": "FAIL_HDR_COLOR_AND_LOUDNESS",
+      "actual_color": "BT2020_PQ_HDR10",
+      "target_sdr_bt709": false,
+      "measured_integrated_lufs": -25.28,
+      "target_minus_18_plusminus_3_lufs": false,
+      "original_preserved": true,
+      "voice_library_preserved": true,
+      "final_owner_editorial_qa": false,
+      "scope": "SANDBOX_AV_INSPECTION_NOT_FAMILIA_SSHSIG_OR_DEVICE"
+    }
   }
 }
