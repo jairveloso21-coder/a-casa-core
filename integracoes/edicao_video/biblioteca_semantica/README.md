@@ -1,3 +1,8 @@
+<!-- CASA_EXECUTABLE_QA_V6 -->
+## Biblioteca V6 executável — auditoria de lote
+
+[qa_video_lote.py](./qa_video_lote.py) é a biblioteca de **QA executável e somente leitura**: confere hashes dos originais, hashes das saídas, codec, BT.709, duração, loudness integrado/true peak, sobreposição dos dois Shorts e decodificação integral. [Oito testes de regressão](./tests/test_qa_video_lote.py) passaram no sandbox; [3/3 mídias reais V6](./QA_EXECUTAVEL_V6.md) passaram na auditoria. O módulo não edita, não infere eventos e não adiciona textos à imagem. Qwen3-VL e integração automática com editores continuam não homologados.
+
 <!-- CASA_AUDIO_QA_V6 -->
 ## Gate de áudio e duração narrativa (V6)
 
