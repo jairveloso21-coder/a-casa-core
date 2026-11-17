@@ -31,13 +31,13 @@
   ],
   "integration_state": {
     "SOURCE": "COMMITTED_AND_READBACK",
-    "SANDBOX_UNIT_TEST": "NOT_EXECUTED",
-    "CI": "NOT_EXECUTED",
-    "HOST_FAMILIA": "NOT_TESTED",
-    "DEVICE": "NOT_TESTED",
-    "MODEL_INFERENCE": "NOT_INSTALLED"
+    "SANDBOX_UNIT_TEST": "PASS_SANDBOX_TESTS_RECORDED_IN_README_SUBMODULES",
+    "CI": "NOT_ATTESTED",
+    "HOST_FAMILIA": "NOT_ATTESTED_FOR_THIS_MODULE",
+    "DEVICE": "NOT_ATTESTED",
+    "MODEL_INFERENCE": "NOT_HOMOLOGATED_QWEN3_VL"
   },
-  "notes": "Provides validator and proposed EDL only; no video-understanding model, render pipeline, or editor integration is installed.",
+  "notes": "Semantic validator/EDL and FFmpeg renderer/QA modules exist in SOURCE. Sandbox media tests are documented. REA Video host CP34 probe/CP35 no-VLM decomposition are separate capabilities, NOT automatic vision or proof of host render_original/qa_video_lote. No R26.1 MP4 e2e proof.",
   "qa_export_batch_v6": {
     "version": "1.0.0",
     "module": "qa_video_lote.py",
@@ -107,5 +107,38 @@
     "blocking_dependency": "NONE_FROM_OPTIONAL_VLM",
     "selected_job_proof_required": "SOURCE_MEDIA_HASH_AND_FRAME_OBSERVATIONS_PLUS_RENDER_QA",
     "canonical_state": "jairveloso21-coder/Projetos-Arquivo:CANONICAL_SYSTEM_STATE.json.video_studio_ai_global_checkpoint.visual_inference_routing_reconciliation"
+  },
+  "homologation_reconciliation_20261117": {
+    "schema": "CASA_SEMANTIC_VIDEO_V6_EVIDENCE_SCOPE_V1",
+    "source_of_truth": "jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/homologation/CASA_HOMOLOGATION_RECONCILIATION_20261117.json",
+    "code_reused_without_duplication": true,
+    "manual_stellar_decoupage": "SANDBOX_V5_OBSERVATION_SHA256_ORIGINAL",
+    "source_original_sha256": "5678a1b033a815a90b97c615e5d87fba3afe6e74275146310bbfb426df5fb5b5",
+    "realm_breakdown": {
+      "scope": "FAMILIA_CP35_REAL_REA_VIDEO_DECOMPOSE",
+      "input_media": "CP30_QWEN_EDGE_CADU_NARRATED_TECH_ONLY.mp4",
+      "vlm": false,
+      "asr": false,
+      "ocr": false,
+      "stellar_original_analyzed": false
+    },
+    "engine_qwen3_vl_host": "SPEC_SOURCE_ONLY_NOT_HOMOLOGATED",
+    "renderer_v6": {
+      "sandbox_tests": true,
+      "familia_host_receipt": null,
+      "version_source": "render_original.py",
+      "eve_r26_1_voice_mix_implemented": false
+    },
+    "qa_v6": {
+      "sandbox_unit_and_media_tests": true,
+      "familia_host_receipt": null,
+      "version_source": "qa_video_lote.py"
+    },
+    "r26_1_voice_lock": "jairveloso21-coder/Projetos-Arquivo/chatgpt-ops/operational/voice-library/CANAL_DARK_R26_1_LOCK.json",
+    "r26_1_archive": "APPROVED_ARTISTICALLY_CASA_SSHSIG_PENDING",
+    "e2e_final_mp4": "NOT_ATTESTED",
+    "no_project_data_copied": true,
+    "no_existing_source_deleted": true,
+    "signatures_not_inferred_from_json": true
   }
 }
