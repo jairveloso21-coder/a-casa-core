@@ -1,3 +1,8 @@
+<!-- CASA_VIDEO_EXPORT_V5 -->
+## Correção de exportação V5
+
+A [biblioteca semântica / guia de exportação V5](./biblioteca_semantica/GUIA_EXPORTACAO_SOCIAL_V5.md) acrescenta regras de reenquadramento vertical, controle de notificações, continuidade de finalizações, conversão HDR→SDR com metadados BT.709 e arquivo MP4 H.264/AAC otimizado para download. Evidência: 6 exports localmente decodificados no sandbox; HOST/DEVICE não testados.
+
 <!-- CASA_SEMANTIC_VIDEO_LIBRARY_V1 -->
 ## Biblioteca global de decupagem semântica v1.0
 
