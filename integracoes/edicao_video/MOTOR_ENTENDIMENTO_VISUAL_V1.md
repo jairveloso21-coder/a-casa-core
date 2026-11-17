@@ -73,3 +73,6 @@ Notebook Windows 11 + WSL2, i5-10210U, ~19,83 GB RAM, GPU MX250. Não assumir qu
 - DEVICE e retenção real: **pendentes**.
 
 Não registrar SUCCESS de visão automática enquanto não existir arquivo gerado pelo modelo local, logs, hash, versão, medições e revisão das descrições contra vídeo bruto.
+
+## Reconciliação de escopo — 17/11/2026
+REA Video CP34/CP35 já operou no FAMILIA; CP35 processou clipe técnico de 7 s **sem VLM/OCR/ASR**. Isso prova `probe/decompose`, não Qwen3-VL interpretando o original Stellar Blade. A decupagem V5 do bruto é observação assistida de sandbox, não inferência local homologada. O MP4 R26.1 já existe e foi baixado do Drive; SHA bate com FAMILIA, mas QA de HDR PQ/BT.2020 e loudness -25,28 LUFS **reprovou** e houve rejeição editorial do proprietário. Ver [registro reconciliado](./HOMOLOGACAO_RECONCILIADA_20261117.md). Não gerar novamente voz nem reiniciar o worker R4.
