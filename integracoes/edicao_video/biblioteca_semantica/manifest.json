@@ -1,0 +1,41 @@
+{
+  "library_id": "casa.video.semantic-timeline",
+  "name": "CASA Semantic Video Library",
+  "version": "1.0.0",
+  "scope": "global_reusable",
+  "license": "Repository policy applies; third-party models retain own licenses",
+  "entrypoint": "semantic_timeline.py",
+  "public_api": [
+    "validate_document",
+    "verify_sources",
+    "build_edl"
+  ],
+  "skill_source": "SKILL.md",
+  "schema": "schema.json",
+  "tests": "tests/test_semantic_timeline.py",
+  "sample": "examples/example_timeline.json",
+  "dependencies_runtime": "Python 3.10+ standard library",
+  "source_requirements": [
+    "raw_capture",
+    "SHA256",
+    "chronological",
+    "causal_dependency",
+    "private_annotations"
+  ],
+  "prohibitions": [
+    "edit_derived_videos",
+    "overlay_semantic_text",
+    "fabricate_outcome",
+    "cut_mid_action",
+    "delete_sources"
+  ],
+  "integration_state": {
+    "SOURCE": "COMMITTED_AND_READBACK",
+    "SANDBOX_UNIT_TEST": "NOT_EXECUTED",
+    "CI": "NOT_EXECUTED",
+    "HOST_FAMILIA": "NOT_TESTED",
+    "DEVICE": "NOT_TESTED",
+    "MODEL_INFERENCE": "NOT_INSTALLED"
+  },
+  "notes": "Provides validator and proposed EDL only; no video-understanding model, render pipeline, or editor integration is installed."
+}
