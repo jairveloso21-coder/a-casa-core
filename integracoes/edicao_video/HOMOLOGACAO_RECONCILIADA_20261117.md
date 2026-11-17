@@ -37,3 +37,11 @@
 - `a-casa-core/integracoes/edicao_video/biblioteca_semantica/manifest.json#homologation_reconciliation_20261117`.
 
 **Estado em 17/11:** correção do registro em SOURCE; o vídeo final de Stellar Blade ainda NÃO está atestado, e essa publicação não é prova de execução no FAMILIA.
+
+## QA INDEPENDENTE MP4 R26.1 — arquivo real do Drive (17/11/2026)
+
+O MP4 **já foi renderizado** pelo worker R4 e existe no Google Drive, id `1GN48QKXknZ9G_r2W_gYCXZdvVyf1GNKh`, nome `CANAL_DARK_EVE_R26_1_LUTA_POST_CANDIDATE.mp4`, 107.935.180 bytes. O recibo original R4 atesta **dispatch**; o checkpoint posterior relata render concluído e decodificação completa. A auditoria **baixou os bytes reais**, verificou SHA-256 `671db8ebd521212291c98e6dab0acdde13ab5dbf2e8de53c4dc298be64a7b531` igual ao hash reportado pelo FAMILIA, e completou a decodificação integral por FFmpeg sem erro.
+
+**Reprovação técnica comprovada no sandbox:** `ffprobe` indica H.264 vertical 720x1280, aproximadamente 60 fps, **BT.2020 / PQ HDR (smpte2084, bt2020nc)** em vez de SDR BT.709; medição do áudio original mostra **−25,28 LUFS**, fora da tolerância de publicação `−18 ±3 LUFS`, com true peak `−7,18 dBTP`. Logo o candidato **NÃO passou** no gate de cor/loudness e **não é release editorial homologado**, embora tenha arquivo íntegro e reprodução decodificável.
+
+Registro formal e reusable fail-closed: `Projetos-Arquivo/chatgpt-ops/operational/homologation/CASA_EVE_R26_1_INDEPENDENT_MEDIA_QA_20261117.json`; artefato de QA reproduzível entregue na conversa. Para a correção, partir **do WebM bruto com SHA já conhecido**, conservar a voz R26.1 original intacta e tratar HDR→SDR explicitamente, com loudness medido, sem reencode de prévias derivadas como se fossem originais. Não reiniciar o worker R4 nem gerar novas vozes sem reconciliação de estado. CI, homologação funcional do HOST após correção, identificação perceptual e revisão editorial permanecem separados.
