@@ -1,3 +1,8 @@
+<!-- CASA_AUDIO_QA_V6 -->
+## Gate de áudio e duração narrativa (V6)
+
+[QA_AUDIO_SOCIAL_V6.md](./QA_AUDIO_SOCIAL_V6.md) — acrescenta medição EBU R128, true peak e comparação de loudness entre todos os vídeos de um mesmo lote, evitando shorts com áudio muito mais baixo. Também impede repetir os mesmos segundos entre Shorts quando isso não acrescenta narrativa. A correção-piloto de três vídeos foi testada no sandbox a partir do **original**, não no host FAMILIA.
+
 <!-- CASA_VIDEO_EXPORT_V5 -->
 ## Exportação social e revisão visual V5
 
