@@ -77,4 +77,11 @@ Responder apenas JSON com: `id_os`, `alvo` (`WIN_HOST | WSL_LINUX | CELULAR_GARN
                      }
 }
 
+
+[CASA-OWNER-20261118-HERMES-NUCLEUS-L1]
+- Integracao de sete capacidades inspiradas no Hermes Agent: memória persistente, Skills evolutivas, MCP, execução tipada, subagentes, automação e multiplataforma. A única autoridade é CASA Core; não instalar Hermes Agent ou modelo Hermes 3/4 por padrão.
+- Carregar `core/CASA_HERMES_NUCLEUS_CHATGPT_HANDOFF.md` e `core/CASA_HERMES_NUCLEUS_V1.json` ao retomar, junto do estado/recibo canônicos de Projetos-Arquivo. `core/casa_hermes_nucleus.py` inventaria fontes sem declarar CI/HOST/DEVICE, e possui regressão `tests/test_casa_hermes_nucleus.py`.
+- FAMILIA tem transporte histórico Git/Gmail autenticado; ausência de PowerShell direto no ChatGPT NÃO invalida a ponte. Reconciliar primeiro o job V1 somente leitura 6d637bd7-ff0e-41d5-a14f-112285b994b7 em `casa-sovereign-bridge-v1/results/<job>/familia.json`, sem reenviar a operação de efeito incerto.
+- Não criar daemon, orquestrador concorrente, memória duplicada, shell remoto arbitrário nem presumir instalação nativa do ChatGPT. Exigir readback e recibos para cada gate.
+
 === FIM DO CONTEXTO ===
