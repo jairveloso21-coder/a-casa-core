@@ -16,12 +16,19 @@
       "required_field": "status"
     },
     "casa-global-tools-mcp": {
-      "transport": "casa-global-stdio"
+      "transport": "casa-global-stdio",
+      "expected_sha256": "615bcf4b9ece89607bd1afcd3df1e96409c6ff24184efbeaca6a4f0ebcde8a1b"
     },
     "gitea-ci": {
       "transport": "http",
       "url": "http://127.0.0.1:3002/api/v1/version",
       "required_field": "version"
     }
+  },
+  "pin_provenance": {
+    "host": "FAMILIA",
+    "installed_r38_sha256": "615bcf4b9ece89607bd1afcd3df1e96409c6ff24184efbeaca6a4f0ebcde8a1b",
+    "readback": "M_20261118_GLOBAL_TOOLS_MCP_97_REPORT_BYTES_R3",
+    "historical_r16_sha256": "1cdd8fb4e951229e720a75163a864b14613bbeada44363b03053fffcba09e84d"
   }
 }
