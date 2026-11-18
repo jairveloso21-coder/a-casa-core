@@ -17,7 +17,7 @@
     },
     "casa-global-tools-mcp": {
       "transport": "casa-global-stdio",
-      "expected_sha256": "615bcf4b9ece89607bd1afcd3df1e96409c6ff24184efbeaca6a4f0ebcde8a1b"
+      "expected_sha256": "6abc61028c6e629c9a6b533dcaf455d688441f24f8143bf4288735d5b60bb100"
     },
     "gitea-ci": {
       "transport": "http",
@@ -29,6 +29,10 @@
     "host": "FAMILIA",
     "installed_r38_sha256": "615bcf4b9ece89607bd1afcd3df1e96409c6ff24184efbeaca6a4f0ebcde8a1b",
     "readback": "M_20261118_GLOBAL_TOOLS_MCP_97_REPORT_BYTES_R3",
-    "historical_r16_sha256": "1cdd8fb4e951229e720a75163a864b14613bbeada44363b03053fffcba09e84d"
+    "historical_r16_sha256": "1cdd8fb4e951229e720a75163a864b14613bbeada44363b03053fffcba09e84d",
+    "previous_installed_r38_sha256": "615bcf4b9ece89607bd1afcd3df1e96409c6ff24184efbeaca6a4f0ebcde8a1b",
+    "current_guarded_gateway_sha256": "6abc61028c6e629c9a6b533dcaf455d688441f24f8143bf4288735d5b60bb100",
+    "host_cutover_mission": "M_20261118_GLOBAL_TOOLS_MCP_QUARANTINE_ATOMIC_HOST_R7",
+    "host_stdout_verified": "HOST_FILTERED_PASS_17_TESTS_1_ACTIVE_96_QUARANTINED"
   }
 }
