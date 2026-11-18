@@ -249,10 +249,16 @@ def main() -> int:
         if a.output:
             if a.output.is_symlink() or not a.output.parent.is_dir():
                 raise ValueError("OUTPUT_DIRECTORY_UNAVAILABLE")
-            with a.output.open("x", encoding="utf-8") as out:
-                out.write(raw)
+            payload = raw.encode("utf-8")
+            # Binary mode avoids Windows CRLF rewriting that invalidated R1 SHA.
+            with a.output.open("xb") as out:
+                out.write(payload)
+            with a.output.open("rb") as inp:
+                on_disk = hashlib.sha256(inp.read()).hexdigest()
+            if on_disk != hashlib.sha256(payload).hexdigest():
+                raise ValueError("REPORT_READBACK_SHA256_MISMATCH")
             print(json.dumps({"status": "REPORT_CREATED", "path": str(a.output),
-                              "sha256": hashlib.sha256(raw.encode()).hexdigest(),
+                              "sha256": on_disk,
                               "counts": report["counts"], "gitea": report["infrastructure_gitea"],
                               "activations": 0}, sort_keys=True))
         else:
