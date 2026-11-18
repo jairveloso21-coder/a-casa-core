@@ -70,12 +70,52 @@ def validate(manifest: dict, *, check_media=True) -> dict:
     duration = float(p["format"]["duration"])
     if not math.isclose(duration, float(manifest["master"]["duration_seconds"]), abs_tol=0.15):
         raise ValueError("master duration drift")
+    # R13 five-voice behavior is the default, preserved byte-for-byte at the
+    # contract level. Project-specified single narration reuses THIS mixer.
+    cast_scope = manifest.get("cast_scope", "FIVE_VOICES")
+    if cast_scope not in ("FIVE_VOICES", "EVE_ONLY"):
+        raise ValueError("unknown cast scope")
     shots = manifest.get("clips", [])
-    if not isinstance(shots, list) or not 5 <= len(shots) <= 18:
-        raise ValueError("expected 5 to 18 individually reviewed clips")
+    min_clips = 3 if cast_scope == "EVE_ONLY" else 5
+    if not isinstance(shots, list) or not min_clips <= len(shots) <= 18:
+        raise ValueError("wrong individually reviewed clip count")
+    if any(not isinstance(s, dict) for s in shots):
+        raise ValueError("invalid clip entry")
     names = {x.get("voice") for x in shots}
-    if names != CAST:
-        raise ValueError(f"five voices required, found {sorted(str(x) for x in names)}")
+    if cast_scope == "FIVE_VOICES":
+        if names != CAST:
+            raise ValueError(f"five voices required, found {sorted(str(x) for x in names)}")
+    else:
+        if names != {"EVE"}:
+            raise ValueError("EVE_ONLY_REJECTS_OTHER_VOICES")
+        editorial = manifest.get("editorial_scope")
+        if not isinstance(editorial, dict) or editorial.get("schema") != "CASA_VIDEO_EDITORIAL_SCOPE_V1":
+            raise ValueError("EDITORIAL_SCOPE_MISSING")
+        if (editorial.get("project") != "CANAL_DARK"
+                or editorial.get("mode") != "EVE_ONLY_PRIVATE_TEST"
+                or editorial.get("gameplay_master_sha256") != master_sha
+                or editorial.get("allowed_narrators") != ["EVE"]):
+            raise ValueError("EDITORIAL_SOURCE_OR_CAST_MISMATCH")
+        # The R8 candidate already contains four other narration tracks.
+        if master_sha == "48e74edfa88f6b30fcece706ce39b89a4e4b5a65c3f88549ff22960d94709b54":
+            raise ValueError("MIXED_R8_IS_NOT_CLEAN_MASTER")
+        # Verify the physical bytes of the CASA release-gate's SOURCE report.
+        # This is not a signature or a substitute for a HOST-signed receipt.
+        report_path = Path(editorial.get("pre_render_report_path", ""))
+        report_sha = editorial.get("pre_render_report_sha256")
+        if (not report_path.is_file() or report_path.is_symlink()
+                or not isinstance(report_sha, str) or len(report_sha) != 64
+                or digest(report_path) != report_sha):
+            raise ValueError("PRE_RENDER_REPORT_NOT_VERIFIED")
+        try:
+            gate = json.loads(report_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            raise ValueError("PRE_RENDER_REPORT_INVALID") from exc
+        if (gate.get("schema") != "CASA_VIDEO_RELEASE_GATE_RESULT_V2"
+                or gate.get("phase") != "pre_render"
+                or gate.get("passed") is not True
+                or gate.get("release_status") != "PREFLIGHT_READY"):
+            raise ValueError("PRE_RENDER_GATE_BLOCKED")
     ordered = sorted(shots, key=lambda x: x["at"])
     previous_end = 0.
     signals = []
@@ -111,12 +151,17 @@ def validate(manifest: dict, *, check_media=True) -> dict:
                 raise ValueError(f"voice clip longer than scene window {i}")
         signals.append({"voice": clip["voice"], "sha256": signature,
                         "seconds": round(secs, 3), "at": start, "until": end})
-    if not (ordered[0]["at"] < 40 and any(60 <= x["at"] <= 120 for x in ordered)
-            and any(x["at"] > 130 for x in ordered)):
-        raise ValueError("speech must be spread from opening through climax")
+    if cast_scope == "FIVE_VOICES":
+        if not (ordered[0]["at"] < 40 and any(60 <= x["at"] <= 120 for x in ordered)
+                and any(x["at"] > 130 for x in ordered)):
+            raise ValueError("speech must be spread from opening through climax")
+    else:
+        zones = {int(min(2, float(s["at"]) * 3 / duration)) for s in ordered}
+        if zones != {0, 1, 2}:
+            raise ValueError("EVE_NARRATION_NOT_DISTRIBUTED")
     if len(set(round(x["at"] / 5) for x in ordered)) != len(ordered):
         raise ValueError("clustered voice placement")
-    return {"status": "PREFLIGHT_PASS", "cast": sorted(names), "master_sha256": master_sha,
+    return {"status": "PREFLIGHT_PASS", "cast": sorted(names), "cast_scope": cast_scope, "master_sha256": master_sha,
             "master_duration_seconds": duration, "clips": signals,
             "editorial_release_approved": False}
 
