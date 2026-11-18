@@ -1,0 +1,46 @@
+name: CASA_CI_GATEKEEPER_V16
+on:
+  push:
+    branches: ["main", "fix/**", "feat/**"]
+  pull_request:
+
+jobs:
+  audit_and_attest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Anchor
+        uses: actions/checkout@v4
+
+      - name: Bloquear Referencias Aposentadas (410 GONE)
+        run: |
+          if grep -rnEi "forgejo|desktop_commander|desktop-commander" . --exclude-dir=.git --exclude="casa_gatekeeper.yml"; then
+            echo "ERRO_GOVERNANCA: Referencia a rota aposentada detectada no codigo."
+            exit 1
+          fi
+
+      - name: Validar Integridade JSON e Schemas
+        run: |
+          python3 -c '
+          import glob, json, sys
+          files = glob.glob("**/*.json", recursive=True)
+          for f in files:
+              with open(f, encoding="utf-8") as fp:
+                  json.load(fp)
+          print(f"OK: {len(files)} arquivos JSON validados com sucesso.")
+          '
+
+      - name: Emitir Atestado de CI (SHA + RUN_ID)
+        run: |
+          mkdir -p .casa_ci_receipts
+          cat <<EOF > .casa_ci_receipts/ci_attestation_${{ github.sha }}.json
+          {
+            "schema": "CASA_CI_ATTESTATION_V1",
+            "ci_server": "GITEA_127_0_0_1_3002",
+            "ci_run_id": "${{ github.run_id }}",
+            "commit_sha": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "status": "CI_PASSED",
+            "timestamp_utc": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+          sha256sum .casa_ci_receipts/ci_attestation_${{ github.sha }}.json
