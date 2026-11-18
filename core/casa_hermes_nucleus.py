@@ -110,8 +110,13 @@ def survey(core_root: Path, state_root: Path, manifest_path: Path | None = None)
 
 
 def receipt_gate(task: dict[str, Any], receipt: dict[str, Any] | None,
+                 attestation: dict[str, Any] | None = None,
                  signature_verifier: Any = None) -> dict[str, Any]:
-    """Exige verificador SSHSIG confiável externo: campo JSON não é assinatura."""
+    """Correlaciona V1 e V2 e exige SSHSIG via verificador externo confiável.
+
+    O callback verifica assinatura, namespace casa-sovereign-v2@jairworkspace.local
+    e a chave pública previamente pinada. Não confiar em um campo proof_level.
+    """
     if not isinstance(task, dict) or task.get("schema") != "CASA_SOVEREIGN_GIT_TASK_V1":
         return {"status": "INVALID_TASK", "host_verified": False}
     if not isinstance(receipt, dict):
@@ -127,10 +132,19 @@ def receipt_gate(task: dict[str, Any], receipt: dict[str, Any] | None,
         return {"status": "RECEIPT_MISMATCH", "host_verified": False}
     if receipt.get("status") != "PASS":
         return {"status": "HOST_FAILED_OR_UNCONFIRMED", "host_verified": False}
-    if not callable(signature_verifier):
+    if not isinstance(attestation, dict):
         return {"status": "GIT_RECEIPT_MATCH_NOT_SIGNED_VERIFICATION", "host_verified": False}
+    receipt_raw = json.dumps(receipt, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    if any((attestation.get("schema") != "CASA_SOVEREIGN_SIGNED_V1_ATTESTATION_V2",
+            attestation.get("device") != task.get("target"),
+            attestation.get("job_id") != task.get("job_id"),
+            attestation.get("owner") != task.get("owner"),
+            attestation.get("receipt_sha256") != hashlib.sha256(receipt_raw).hexdigest())):
+        return {"status": "ATTESTATION_MISMATCH", "host_verified": False}
+    if not callable(signature_verifier):
+        return {"status": "AWAITING_INDEPENDENT_SSHSIG_VERIFIER", "host_verified": False}
     try:
-        verified = signature_verifier(receipt)
+        verified = signature_verifier(attestation)
     except (OSError, ValueError):
         verified = False
     return {"status": "HOST_SIGNED_VERIFIED" if verified is True else "SIGNATURE_INVALID",
