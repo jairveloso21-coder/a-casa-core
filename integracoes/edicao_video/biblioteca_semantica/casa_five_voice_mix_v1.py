@@ -114,7 +114,9 @@ def validate(manifest: dict, *, check_media=True) -> dict:
         if (gate.get("schema") != "CASA_VIDEO_RELEASE_GATE_RESULT_V2"
                 or gate.get("phase") != "pre_render"
                 or gate.get("passed") is not True
-                or gate.get("release_status") != "PREFLIGHT_READY"):
+                or gate.get("release_status") != "PREFLIGHT_READY"
+                or gate.get("source_sha256") != master_sha
+                or gate.get("editorial_scope_mode") != "EVE_ONLY_PRIVATE_TEST"):
             raise ValueError("PRE_RENDER_GATE_BLOCKED")
     ordered = sorted(shots, key=lambda x: x["at"])
     previous_end = 0.
