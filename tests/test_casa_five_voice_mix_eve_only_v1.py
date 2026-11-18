@@ -39,7 +39,7 @@ class ExistingMixerEveOnlyTests(unittest.TestCase):
             p=self.root/("voice%d.wav"%i)
             with wave.open(str(p),"wb") as f:
                 f.setnchannels(1);f.setsampwidth(2);f.setframerate(24000)
-                f.writeframes(b"\\x00\\x00"*24000)
+                f.writeframes(b"\x00\x00"*24000)
             self.wavs.append(p)
         gate={"schema":"CASA_VIDEO_RELEASE_GATE_RESULT_V2",
               "phase":"pre_render","passed":True,"release_status":"PREFLIGHT_READY",
