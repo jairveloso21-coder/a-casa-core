@@ -117,6 +117,35 @@ def http_check(spec: dict, requester=None, env=None) -> dict:
     return result
 
 
+
+def already_attested_gateway(state: dict, installed_sha256: str) -> bool:
+    """Expose a CURRENT signed activation, never issue a new grant on a probe."""
+    grants = state.get("mcp_local_active_integrations_v1", {})
+    proof = grants.get("casa-global-tools-mcp") if isinstance(grants, dict) else None
+    lean = state.get("mcp_local_lean_manifest_v1", {})
+    return (
+        isinstance(proof, dict) and isinstance(lean, dict)
+        and proof.get("schema") == "CASA_MCP_LOCAL_ACTIVATION_PROOF_V1"
+        and proof.get("host") == "FAMILIA"
+        and proof.get("verified_by") == "CASA_CORE_INDEPENDENT_SSHSIG"
+        and proof.get("source_gate") == "PASS"
+        and proof.get("host_gate") == "PASS"
+        and proof.get("ci_gate") == "PASS"
+        and proof.get("live_stdio_tool_call") is True
+        and proof.get("allowed_operation") == "casa_list_global_tools"
+        and proof.get("scope") == "GLOBAL_READONLY_CATALOG_DISCOVERY_ONLY"
+        and proof.get("installed_sha256") == installed_sha256
+        and isinstance(proof.get("receipt_sha256"), str)
+        and SHA.fullmatch(proof["receipt_sha256"]) is not None
+        and proof.get("last_verified_stage") == "HOST_SIGNED_SSHSIG_R12"
+        and lean.get("status") == "PASS_SIGNED_HOST_LOCAL_ONLY"
+        and lean.get("active_count") == 1
+        and lean.get("installed_sha256") == installed_sha256
+        and lean.get("independent_receipt") == proof.get("independent_host_signature_check")
+        and lean.get("host") == "FAMILIA"
+    )
+
+
 def mcp_stdio_check(spec: dict, state: dict, catalog_path: Path,
                     state_path: Path, python_exe: str | None = None) -> dict:
     """Executa somente script CASA fixo, com SHA conhecido, sem shell."""
@@ -156,10 +185,12 @@ def mcp_stdio_check(spec: dict, state: dict, catalog_path: Path,
         if ("casa_list_global_tools" not in names
                 or tools_call.get("schema") != "CASA_MCP_GLOBAL_DISCOVERY_V1"):
             return {"status": "MCP_TOOL_CALL_FAILED", "eligible": False}
+        attested = already_attested_gateway(state, actual)
         return {"status": "MCP_READONLY_STDIO_PASS", "connected": True,
-                "eligible": False, "tool_count": len(names),
+                "eligible": attested, "tool_count": len(names),
                 "installed_sha256": actual,
-                "canonical_operation_verified": False}
+                "canonical_operation_verified": attested,
+                "activation_mode": "EXISTING_SIGNED_GRANT_ONLY" if attested else "NOT_ATTESTED"}
     except (OSError, subprocess.TimeoutExpired, ValueError, KeyError, TypeError):
         return {"status": "MCP_PROTOCOL_FAILED", "eligible": False}
 
@@ -202,10 +233,10 @@ def run(catalog: dict, probes: dict, state: dict, catalog_path: Path,
     for item in items:
         key = item["id"]
         spec = probes["probes"].get(key)
-        if item.get("host") in ("UNRESOLVED", "REVIEW_ONLY", "SOURCE_ONLY", "REMOTE_UNRESOLVED"):
-            status = {"status": "QUARANTINED_NO_VERIFIED_LOCAL_HOST", "eligible": False}
-        elif key == "forgejo-ci":
+        if key == "forgejo-ci":
             status = {"status": "RETIRED_ROUTE_DISABLED", "eligible": False}
+        elif not spec and item.get("host") in ("UNRESOLVED", "REVIEW_ONLY", "SOURCE_ONLY", "REMOTE_UNRESOLVED"):
+            status = {"status": "QUARANTINED_NO_VERIFIED_LOCAL_HOST", "eligible": False}
         elif not spec:
             status = {"status": "NO_PINNED_LOCAL_PROBE", "eligible": False}
         elif machine != "FAMILIA" or dry_run:
@@ -231,6 +262,8 @@ def run(catalog: dict, probes: dict, state: dict, catalog_path: Path,
             "source_only": False, "transport_probes_performed": not dry_run and machine == "FAMILIA",
             "counts": dict(sorted(counts.items())), "rows": rows,
             "infrastructure_gitea": infra, "eligible_candidates": eligible,
+            "already_active_verified_count": sum(bool(r.get("canonical_operation_verified")) for r in rows),
+            "new_canonical_activations": 0,
             "canonical_activations": 0, "state_mutated": False,
             "signature_independently_verified": False,
             "promotion_gate": "SIGNED_RECEIPT_AND_INDEPENDENT_SSHSIG_AND_CORE_PROJECT_POLICY",
