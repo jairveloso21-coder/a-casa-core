@@ -92,6 +92,35 @@ class SmokeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "UNKNOWN_TRANSPORT"):
             m.verify_catalog(CAT, updated)
 
+    def test_attested_gateway_visible_without_automatic_new_grant(self):
+        sha = "c" * 64
+        state = {"mcp_local_active_integrations_v1": {"casa-global-tools-mcp": {
+            "schema": "CASA_MCP_LOCAL_ACTIVATION_PROOF_V1",
+            "host": "FAMILIA", "verified_by": "CASA_CORE_INDEPENDENT_SSHSIG",
+            "source_gate": "PASS", "host_gate": "PASS", "ci_gate": "PASS",
+            "live_stdio_tool_call": True, "allowed_operation": "casa_list_global_tools",
+            "scope": "GLOBAL_READONLY_CATALOG_DISCOVERY_ONLY",
+            "installed_sha256": sha, "receipt_sha256": "a"*64,
+            "last_verified_stage": "HOST_SIGNED_SSHSIG_R12",
+            "independent_host_signature_check": "missions/outbox/GLOBAL_TOOLS/x_receipt.json"}},
+            "mcp_local_lean_manifest_v1": {"host": "FAMILIA",
+                "status": "PASS_SIGNED_HOST_LOCAL_ONLY", "active_count": 1,
+                "installed_sha256": sha,
+                "independent_receipt": "missions/outbox/GLOBAL_TOOLS/x_receipt.json"}}
+        self.assertTrue(m.already_attested_gateway(state, sha))
+        self.assertFalse(m.already_attested_gateway(state, "b"*64))
+        state["mcp_local_lean_manifest_v1"]["active_count"] = 97
+        self.assertFalse(m.already_attested_gateway(state, sha))
+
+    def test_catalog_host_hint_does_not_block_explicit_pinned_probe(self):
+        cat = {"schema": m.CATALOG_SCHEMA, "entries": [
+            {"id": "tool-0", "host": "UNRESOLVED"}
+        ] + CAT["entries"][1:]}
+        result = m.run(cat, PROBES, {}, Path("catalog"), Path("state"),
+                       machine="FAMILIA", http_requester=lambda: (200, b'{"version":"1"}'))
+        self.assertEqual(result["rows"][0]["status"], "HTTP_200_LOCAL_HEALTH")
+        self.assertEqual(result["already_active_verified_count"], 0)
+
     def test_no_execution_on_other_machine(self):
         r = m.run(CAT, PROBES, {}, Path("catalog"), Path("state"), machine="OTHER")
         self.assertEqual(r["rows"][0]["status"], "HOST_GATE_NOT_EXECUTED")
