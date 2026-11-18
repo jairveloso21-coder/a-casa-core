@@ -1,0 +1,12 @@
+{
+  "schema": "CASA_TRUSTED_SIGNERS_V1",
+  "authorities": {
+    "CASA_CORE_AUTHORITY": {
+      "host": "FAMILIA",
+      "algorithm": "ssh-ed25519",
+      "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhSV/PXs5D49TqITISrOshBBESVIG+9SI9IOCF5tgrb casa-core-signer",
+      "namespace": "casa-core-receipt",
+      "status": "ACTIVE_TRUSTED"
+    }
+  }
+}
