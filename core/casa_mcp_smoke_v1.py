@@ -120,10 +120,11 @@ def http_check(spec: dict, requester=None, env=None) -> dict:
 def mcp_stdio_check(spec: dict, state: dict, catalog_path: Path,
                     state_path: Path, python_exe: str | None = None) -> dict:
     """Executa somente script CASA fixo, com SHA conhecido, sem shell."""
-    entry = state.get("global_tools_mcp_capability", {}).get(MCP_TRUSTED_STATE_KEY, {})
-    expected = entry.get("installed_bridge_sha256")
+    expected = spec.get("expected_sha256")
     if not isinstance(expected, str) or not SHA.fullmatch(expected):
         return {"status": "MCP_UNPINNED", "eligible": False}
+    # 2026-11-18 R3 readback identifies the newer Qwen R38 approved bridge.
+    # R16's older historical hash is deliberately not treated as current.
     binary = MCP_ROOT / MCP_FILENAME
     if binary.is_symlink() or not binary.is_file() or binary.stat().st_size > 180000:
         return {"status": "MCP_NOT_INSTALLED", "eligible": False}
@@ -177,13 +178,17 @@ def verify_catalog(catalog: dict, probes: dict) -> list[dict]:
         raise ValueError("PROBE_OUTSIDE_CANONICAL_CATALOG")
     for name, spec in defined.items():
         if not isinstance(spec, dict) or set(spec) - {"transport", "url", "required_field",
-                 "auth_env", "identity_field", "identity_expected", "operation_field"}:
+                 "auth_env", "identity_field", "identity_expected", "operation_field", "expected_sha256"}:
             raise ValueError("PROBE_SCHEMA_NOT_ALLOWED:" + name)
         if spec.get("transport") == "http":
             check_url(spec.get("url"))
             if spec.get("required_field") not in {"version", "status", "paths"}:
                 raise ValueError("INVALID_HTTP_HEALTH_SCHEMA")
-        elif spec != {"transport": "casa-global-stdio"} or name != "casa-global-tools-mcp":
+        elif (name != "casa-global-tools-mcp"
+              or spec.get("transport") != "casa-global-stdio"
+              or not isinstance(spec.get("expected_sha256"), str)
+              or not SHA.fullmatch(spec["expected_sha256"])
+              or set(spec) != {"transport", "expected_sha256"}):
             raise ValueError("UNKNOWN_TRANSPORT")
     return items
 
