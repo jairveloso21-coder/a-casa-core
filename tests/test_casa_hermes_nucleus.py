@@ -56,8 +56,13 @@ class NucleusTests(unittest.TestCase):
         rec = {"schema": "CASA_SOVEREIGN_GIT_RESULT_V1", "job_id": "abc", "nonce": "123", "operation": "device.status", "source": "familia", "task_sha256": digest, "status": "PASS"}
         self.assertEqual(mod.receipt_gate(task, rec)["status"], "GIT_RECEIPT_MATCH_NOT_SIGNED_VERIFICATION")
         self.assertEqual(mod.receipt_gate(task, {**rec, "nonce": "bad"})["status"], "RECEIPT_MISMATCH")
-        self.assertEqual(mod.receipt_gate(task, rec, lambda _r: False)["status"], "SIGNATURE_INVALID")
-        self.assertEqual(mod.receipt_gate(task, rec, lambda _r: True)["status"], "HOST_SIGNED_VERIFIED")
+        att = {"schema": "CASA_SOVEREIGN_SIGNED_V1_ATTESTATION_V2", "device": "familia",
+               "job_id": "abc", "owner": None,
+               "receipt_sha256": hashlib.sha256(json.dumps(rec, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()}
+        self.assertEqual(mod.receipt_gate(task, rec, att)["status"], "AWAITING_INDEPENDENT_SSHSIG_VERIFIER")
+        self.assertEqual(mod.receipt_gate(task, rec, {**att, "device": "unknown"}, lambda _r: True)["status"], "ATTESTATION_MISMATCH")
+        self.assertEqual(mod.receipt_gate(task, rec, att, lambda _r: False)["status"], "SIGNATURE_INVALID")
+        self.assertEqual(mod.receipt_gate(task, rec, att, lambda _r: True)["status"], "HOST_SIGNED_VERIFIED")
 
 
 if __name__ == "__main__":
