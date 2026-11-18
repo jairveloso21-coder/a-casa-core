@@ -76,6 +76,15 @@ class SmokeTests(unittest.TestCase):
             m.http_check({**PROBES["probes"]["tool-0"], "auth_env": "HOME"},
                          requester=lambda: (200, b'{}'))
 
+    def test_report_bytes_are_binary_sha_stable(self):
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "report.json"
+            payload = ('{"rows":[1,2]}\n').encode("utf-8")
+            with p.open("xb") as out:
+                out.write(payload)
+            self.assertEqual(p.read_bytes(), payload)
+            self.assertEqual(m.digest(p), m.hashlib.sha256(payload).hexdigest())
+
     def test_no_execution_on_other_machine(self):
         r = m.run(CAT, PROBES, {}, Path("catalog"), Path("state"), machine="OTHER")
         self.assertEqual(r["rows"][0]["status"], "HOST_GATE_NOT_EXECUTED")
