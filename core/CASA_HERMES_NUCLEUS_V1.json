@@ -1,0 +1,51 @@
+{
+  "schema": "CASA_HERMES_NUCLEUS_V1",
+  "authority": "CASA_CORE_ONLY",
+  "host_executor": "EXISTING_STRICT_EXECUTOR",
+  "primary_ci": "Gitea:3002",
+  "remote_shell": "DISALLOWED",
+  "native_chatgpt_installation": false,
+  "starts_daemon": false,
+  "memory_strategy": "REUSE_CANONICAL_JOURNAL_AND_PROJECT_MEMORY",
+  "skill_promotion": "ONLY_AFTER_INDEPENDENT_VERIFICATION_AND_PROJECT_SCOPE_CHECK",
+  "mcp_strategy": "EXISTING_CASA_CORE_GATEWAY_AND_GLOBAL_TOOLS",
+  "concurrency_strategy": "EXISTING_FORGE_LYA_JOURNAL_LOCKS",
+  "schedule_strategy": "EXISTING_CASA_SUPERVISOR_AND_AUTHORIZED_SCHEDULES_ONLY",
+  "models": "QWEN_CODE_AND_OLLAMA_EXISTING_NO_HERMES_MODEL_REQUIRED",
+  "read_only_routes": {
+    "familia_status": {
+      "transport": "sovereign-git-v1",
+      "target": "familia",
+      "operation": "device.status",
+      "params": {}
+    }
+  },
+  "capabilities": {
+    "persistent_memory": {"owner": "CASA_CORE", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "state", "path": "CANONICAL_SYSTEM_STATE.json"},
+      {"root": "state", "path": "chatgpt-ops/skills/casa-memoria-evolutiva/SKILL.md"}
+    ]},
+    "skills_learning": {"owner": "CASA_CORE", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "state", "path": "CASA_SKILLS_INDEX.json"},
+      {"root": "state", "path": "chatgpt-ops/operational/CASA_GLOBAL_IMPROVEMENT_LEDGER_V1.json"}
+    ]},
+    "mcp_gateway": {"owner": "CASA_CORE", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "state", "path": "chatgpt-ops/operational/CASA_FLEET_TOOL_ROUTING_V1.md"},
+      {"root": "core", "path": "ARQUITETURA_DEFINITIVA_CASA_V16.md"}
+    ]},
+    "typed_execution": {"owner": "CASA_CORE", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "state", "path": "casa-sovereign-bridge-v1/bridge.py"},
+      {"root": "state", "path": "SESSION_BOOTSTRAP_V12.md"}
+    ]},
+    "subagents": {"owner": "MOTOR_FORGE_LYA", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "state", "path": "chatgpt-ops/operational/CASA_FLEET_TOOL_ROUTING_V1.md"}
+    ]},
+    "scheduled_automation": {"owner": "CASA_CORE", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "state", "path": "SESSION_BOOTSTRAP_V12.md"}
+    ]},
+    "multi_platform": {"owner": "CASA_CORE", "runtime": "REUSE_EXISTING_CAPABILITY", "source_refs": [
+      {"root": "core", "path": "INICIAR_SESSAO_IA.txt"},
+      {"root": "state", "path": "chatgpt-ops/skills/casa-terminal-bidirecional/SKILL.md"}
+    ]}
+  }
+}
