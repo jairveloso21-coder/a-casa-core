@@ -85,6 +85,13 @@ class SmokeTests(unittest.TestCase):
             self.assertEqual(p.read_bytes(), payload)
             self.assertEqual(m.digest(p), m.hashlib.sha256(payload).hexdigest())
 
+    def test_pinned_mcp_bridge_requires_explicit_digest(self):
+        updated = {"schema": m.PROBES_SCHEMA, "probes": {
+            **PROBES["probes"], "tool-1": {"transport": "casa-global-stdio",
+                                               "expected_sha256": "a" * 64}}}
+        with self.assertRaisesRegex(ValueError, "UNKNOWN_TRANSPORT"):
+            m.verify_catalog(CAT, updated)
+
     def test_no_execution_on_other_machine(self):
         r = m.run(CAT, PROBES, {}, Path("catalog"), Path("state"), machine="OTHER")
         self.assertEqual(r["rows"][0]["status"], "HOST_GATE_NOT_EXECUTED")
