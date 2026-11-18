@@ -1,0 +1,27 @@
+{
+  "schema": "CASA_MCP_PINNED_SMOKE_PROBES_V1",
+  "version": "1.0.0",
+  "scope": "LOCAL_FAMILIA_ONLY",
+  "catalog_size": 97,
+  "probe_rules": "NO_UPSTREAM_GITHUB_AS_INSTALL_PROOF_NO_UNKNOWN_ENDPOINT_GUESSING_200_UNAUTH_AND_403_NOT_PROMOTION",
+  "probes": {
+    "qwen-familia-ollama": {
+      "transport": "http",
+      "url": "http://127.0.0.1:11434/api/version",
+      "required_field": "version"
+    },
+    "voicestudio": {
+      "transport": "http",
+      "url": "http://127.0.0.1:3900/health",
+      "required_field": "status"
+    },
+    "casa-global-tools-mcp": {
+      "transport": "casa-global-stdio"
+    },
+    "gitea-ci": {
+      "transport": "http",
+      "url": "http://127.0.0.1:3002/api/v1/version",
+      "required_field": "version"
+    }
+  }
+}
